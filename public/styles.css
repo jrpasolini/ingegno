@@ -250,6 +250,7 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
   background-position:center top,0 0;
 }
 .tractor-page{
+  isolation:isolate;
   flex:1;min-width:0;
   padding:8px 7px 4px;
   border-left:1px dashed rgba(52,66,40,.62);
@@ -261,6 +262,9 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
   object-fit:contain;object-position:center center;
   image-rendering:crisp-edges;image-rendering:pixelated;
   background:transparent;
+  /* Treat the photo as black printer ink over the continuous paper. */
+  filter:grayscale(1) contrast(1.8) brightness(1.1);
+  mix-blend-mode:multiply;
 }
 .sticker-einstein .tape-top{width:72px;height:20px;top:-9px;left:16%;transform:rotate(-18deg)}
 .sticker-einstein .tape-bottom{width:68px;height:18px;bottom:10px;left:7%;transform:rotate(12deg)}
