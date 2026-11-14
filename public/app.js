@@ -1,5 +1,5 @@
 import {SUBJECTS,createDemoQuestions} from "./bank.js";
-import {analyzePerformance,teacherVerdict} from "./performance.js";
+import {analyzePerformance,teacherVerdict,examOutcome} from "./performance.js";
 const $=id=>document.getElementById(id);
 const state={mode:"impara",count:10,time:"none",questions:[],answers:[],current:0,sessionId:null,demoQuestions:[],
   started:0,ticker:null,deadline:0,questionDeadline:0,finishing:false};
@@ -140,10 +140,12 @@ async function finish(){
   $("tutor-source").textContent=tutor.source==="ai"?"Parecer por IA · "+tutor.model+" · baseado nesta tentativa; pode conter imprecisões.":"Leitura dos seus acertos e erros nesta tentativa · sem parecer gerado por IA.";
   $("review-errors").setAttribute("aria-pressed","false");$("review-empty").hidden=true;
   $("review-errors").textContent="Revisar meus erros";
+  $("exam-stamp")?.remove();
   $("review").innerHTML=grade.results.map((q,i)=>{
     const chosen=q.chosenIndex===null?"Sem resposta":q.options[q.chosenIndex];
     const letters="ABCD",annotation=q.correct?(i%2?'Muito bem!':'Boa!'):(q.chosenIndex===null?'Faltou responder!':'Reveja este conceito!');
-    return '<article class="review-card '+(q.correct?'is-correct':'is-incorrect')+'"><svg class="pen-mark" aria-hidden="true"><use href="#'+(q.correct?'pen-check':'pen-cross')+'"/></svg><div class="review-meta"><span>'+escape(q.subject)+' · '+escape(q.topic)+'</span><span class="sr-only">'+
+    const stamp=i===0?'<div id="exam-stamp" class="exam-stamp '+(examOutcome(grade.correct,grade.total)==='APROVADO'?'stamp-approved':'stamp-failed')+'" aria-label="Resultado da prova: '+examOutcome(grade.correct,grade.total)+'">'+examOutcome(grade.correct,grade.total)+'</div>':'';
+    return '<article class="review-card '+(q.correct?'is-correct':'is-incorrect')+'">'+stamp+'<svg class="pen-mark" aria-hidden="true"><use href="#'+(q.correct?'pen-check':'pen-cross')+'"/></svg><div class="review-meta"><span>'+escape(q.subject)+' · '+escape(q.topic)+'</span><span class="sr-only">'+
       (q.correct?"Resposta correta":"Resposta incorreta ou não respondida")+'</span></div><h4>'+String(i+1).padStart(2,"0")+'. '+escape(q.prompt)+'</h4>'+
       '<p class="'+(q.correct?"right-answer":"wrong-answer")+'">Sua resposta: <span class="answer-circle">'+(q.chosenIndex===null?'—':letters[q.chosenIndex])+'</span> '+escape(chosen)+'</p>'+
       '<p class="right-answer">Gabarito: <span class="key-letter">'+letters[q.correctIndex]+'</span> '+escape(q.options[q.correctIndex])+'</p>'+
@@ -170,4 +172,7 @@ $("review-errors").addEventListener("click",()=>{
   btn.setAttribute("aria-pressed",String(filter));btn.textContent=filter?"Ver gabarito completo":"Revisar meus erros";
   document.querySelectorAll("#review .review-card").forEach(card=>{card.hidden=filter&&card.classList.contains("is-correct");});
   $("review-empty").hidden=!(filter&&!document.querySelector("#review .is-incorrect"));
+  const firstVisible=[...document.querySelectorAll('#review .review-card')].find(card=>!card.hidden);
+  const stamp=$("exam-stamp");
+  if(stamp)(firstVisible||$("review-empty")).prepend(stamp);
 });

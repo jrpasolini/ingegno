@@ -1,7 +1,14 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {analyzePerformance,teacherVerdict} from '../public/performance.js';
+import {analyzePerformance,teacherVerdict,examOutcome} from '../public/performance.js';
 const q=(topic,correct)=>({subject:'Projeto Ágil',topic,correct});
+test('carimbo aprova a partir de 50% sem arredondar o resultado',()=>{
+  assert.equal(examOutcome(0,10),'REPROVADO');
+  assert.equal(examOutcome(4,10),'REPROVADO');
+  assert.equal(examOutcome(5,10),'APROVADO');
+  assert.equal(examOutcome(10,10),'APROVADO');
+  assert.equal(examOutcome(124,250),'REPROVADO');
+});
 test('nota manuscrita usa a proporção real e avaliações coerentes',()=>{
   assert.deepEqual(teacherVerdict(0,5),{note:'0',caption:'Zero. Vamos revisar juntos!',ink:'red'});
   assert.equal(teacherVerdict(2,5).caption,'Precisa melhorar');

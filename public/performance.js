@@ -1,4 +1,7 @@
 // Observations describe this attempt, never mastery beyond the sampled questions.
+export function examOutcome(correct,total){
+  return total>0&&correct/total>=.5?'APROVADO':'REPROVADO';
+}
 export function teacherVerdict(correct,total){
   const ratio=total>0?correct/total:0;
   return {note:(ratio*10).toLocaleString('pt-BR',{maximumFractionDigits:1}),
