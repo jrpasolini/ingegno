@@ -1,0 +1,18 @@
+services:
+  - type: web
+    name: ingegno
+    runtime: node
+    plan: free
+    region: ohio
+    branch: main
+    buildCommand: npm install
+    startCommand: npm start
+    autoDeployTrigger: commit
+    healthCheckPath: /health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: NVIDIA_MODEL
+        value: nvidia/nemotron-3.5-lightning-30b-a3b
+      - key: NVIDIA_API_KEY
+        sync: false
