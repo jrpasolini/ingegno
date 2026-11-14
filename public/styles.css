@@ -225,3 +225,44 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
   #quiz,#result{padding:26px 17px}
 }
 @media(max-width:410px){.brand-lines strong{font-size:32px}.brand-lines em{font-size:27px}.flag-strokes i{width:5px;height:18px}.site-footer{font-size:9px}}
+
+
+/* Approved nostalgic assets: Einstein dot-matrix print and MSX CRT Polaroid */
+.sticker-einstein{
+  top:84px;
+  left:max(10px,calc((100vw - 1620px)/2));
+  width:clamp(175px,15vw,265px);
+  transform:rotate(-5deg);
+  z-index:1;
+  filter:drop-shadow(3px 5px 3px rgba(42,32,24,.16));
+}
+.sticker-einstein img{
+  width:100%;height:auto;display:block;
+  filter:sepia(.12) contrast(1.07);
+  clip-path:polygon(7% 1%,95% 0,100% 8%,98% 96%,88% 100%,4% 97%,0 88%,2% 12%);
+}
+.sticker-einstein .tape-top{width:71px;height:21px;top:-7px;left:6%;z-index:2;transform:rotate(-25deg)}
+.sticker-einstein .tape-bottom{width:68px;height:20px;bottom:-4px;left:12%;z-index:2;transform:rotate(15deg)}
+.polaroid-msx{
+  top:414px;
+  right:max(5px,calc((100vw - 1630px)/2));
+  width:clamp(175px,14vw,252px);
+  padding:0;
+  border:0;
+  background:none;
+  box-shadow:none;
+  transform:rotate(5deg);
+}
+.polaroid-msx img{
+  display:block;
+  width:100%;
+  height:auto;
+  filter:drop-shadow(3px 7px 5px rgba(43,34,26,.22));
+}
+@media (max-width:1499px) and (min-width:1271px){
+  .sticker-einstein{top:106px;left:2px;width:170px}
+  .polaroid-msx{right:2px;top:440px;width:172px}
+}
+@media (max-width:1270px){
+  .sticker-einstein,.polaroid-msx{display:none}
+}
