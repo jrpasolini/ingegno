@@ -3,67 +3,123 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#10211d">
+  <meta name="theme-color" content="#f6f0df">
   <meta name="description" content="Genio Academy: simulados inteligentes para aprender, errar e melhorar.">
   <title>GENIO Academy · Impara. Sbaglia. Migliora.</title>
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./app.js"></script>
 </head>
 <body>
-  <div class="halo halo-a" aria-hidden="true"></div>
-  <div class="halo halo-b" aria-hidden="true"></div>
+  <div class="notebook-decor" aria-hidden="true">
+    <div class="sticker-einstein">
+      <svg viewBox="0 0 236 250" xmlns="http://www.w3.org/2000/svg" role="presentation">
+        <defs>
+          <pattern id="inkdots" width="5" height="5" patternUnits="userSpaceOnUse"><circle cx="1.5" cy="1.5" r=".9" fill="#141b22"/></pattern>
+          <filter id="paperrough"><feTurbulence type="fractalNoise" baseFrequency=".028" numOctaves="2" seed="5" result="noise"/><feDisplacementMap in="SourceGraphic" in2="noise" scale="1.2"/></filter>
+        </defs>
+        <path d="M35 91 Q-2 44 49 24 Q61 0 94 17 Q115 -6 137 15 Q173 -4 191 28 Q234 35 208 78 Q237 111 212 133 Q221 177 192 183 L203 225 168 228 156 246 50 234 53 204 Q19 203 28 170 Q1 144 22 120Z" fill="#f8f3e8" stroke="#242831" stroke-width="4"/>
+        <g fill="#1d2329" stroke="#1d2329" stroke-width="2" filter="url(#paperrough)">
+          <path d="M34 108 Q0 59 50 36 Q62 -2 86 22 Q115 -4 143 19 Q185 0 203 48 Q227 65 197 91 Q221 136 201 155 L184 117 Q201 85 174 72 Q158 27 131 54 Q90 21 66 66 Q40 65 48 115Z"/>
+          <path d="M39 130 Q9 116 29 93 M47 76 Q16 66 36 43 M65 53 Q59 26 80 15 M92 44 Q95 15 119 18 M157 46 Q169 25 189 43 M195 91 Q220 105 204 120" fill="none" stroke="#1d2329" stroke-width="10" stroke-linecap="round"/>
+          <path d="M58 182 Q51 205 35 210 L26 231 203 237 186 209 164 198 143 218 102 208 78 215Z"/>
+        </g>
+        <path d="M68 74 Q84 47 113 62 Q148 54 172 77 L184 140 Q182 168 159 187 L140 199 100 191 Q70 177 63 145Z" fill="#f3efe4" stroke="#202932" stroke-width="3"/>
+        <path d="M88 108 Q102 97 113 109 M137 109 Q150 97 163 111" fill="none" stroke="#181e25" stroke-width="6" stroke-linecap="round"/>
+        <path d="M84 97 Q100 88 113 94 M137 94 Q154 86 168 98" fill="none" stroke="#151b24" stroke-width="4"/>
+        <ellipse cx="103" cy="110" rx="7" ry="6" fill="#181d23"/><ellipse cx="151" cy="110" rx="7" ry="6" fill="#181d23"/>
+        <path d="M125 109 L115 137 Q126 149 138 138" fill="none" stroke="#1d232a" stroke-width="3"/>
+        <path d="M122 144 Q101 133 88 150 Q97 164 121 154 Q143 168 167 150 Q147 136 122 144Z" fill="#1d232a"/>
+        <path d="M98 160 Q123 168 156 159 Q152 187 125 188 Q102 181 98 160Z" fill="#1c2228"/>
+        <path d="M118 169 Q128 167 136 174 L136 197 Q126 208 118 196Z" fill="#f7f2e8" stroke="#1c2228" stroke-width="2"/>
+        <path d="M66 124 Q45 119 52 142 Q60 156 70 154 M179 123 Q202 118 193 144 Q188 152 180 150" fill="#f3efe4" stroke="#1d232a" stroke-width="3"/>
+        <path d="M78 164 Q83 184 95 190 M158 178 Q145 193 131 194" fill="none" stroke="#1d232a" stroke-width="2"/>
+        <path d="M71 63 Q97 58 106 71 M141 67 Q160 52 184 72" fill="none" stroke="#fcfaf4" stroke-width="6"/>
+        <path d="M45 100 Q32 138 49 175 M195 101 Q216 135 195 166" fill="none" stroke="#f8f3e8" stroke-width="4"/>
+        <path d="M90 205 L89 222 157 222 153 206" fill="url(#inkdots)"/>
+      </svg>
+      <span class="sticker-tape tape-top"></span><span class="sticker-tape tape-bottom"></span>
+    </div>
+    <div class="paper-note note-left"><span class="notebook-check">☑ Estudar</span><span>□ Praticar</span><span>□ Revisar</span><span>□ Melhorar!</span></div>
+    <div class="paper-note note-right">Studio!<br>Ripeti!<br>Conquista! <span class="note-arrow">↙</span></div>
+    <svg class="scribble scribble-parabola" viewBox="0 0 170 125" fill="none" stroke="#304c8e" stroke-linecap="round" stroke-linejoin="round"><path d="M12 109V8m-8 99h156M29 36C35 103 73 118 114 29" stroke-width="2"/><path d="m9 16 3-8 4 8 M151 103l9 4-9 4" stroke-width="2"/><text x="119" y="23" fill="#304c8e" stroke="none" font-size="17" font-style="italic">y</text><text x="155" y="99" fill="#304c8e" stroke="none" font-size="17" font-style="italic">x</text><text x="59" y="121" fill="#304c8e" stroke="none" font-size="16" font-style="italic">y = x²</text></svg>
+    <svg class="scribble scribble-atom" viewBox="0 0 142 116" fill="none" stroke="#304c8e" stroke-width="1.7"><ellipse cx="71" cy="58" rx="65" ry="21" transform="rotate(-23 71 58)"/><ellipse cx="71" cy="58" rx="65" ry="21" transform="rotate(52 71 58)"/><ellipse cx="71" cy="58" rx="65" ry="21" transform="rotate(110 71 58)"/><circle cx="71" cy="58" r="4" fill="#304c8e"/></svg>
+    <div class="polaroid-msx">
+      <div class="polaroid-photo">
+        <svg viewBox="0 0 270 188" xmlns="http://www.w3.org/2000/svg" role="presentation">
+          <defs><linearGradient id="chassis" x2="0" y2="1"><stop stop-color="#535960"/><stop offset="1" stop-color="#282f39"/></linearGradient><pattern id="photoNoise" width="13" height="13" patternUnits="userSpaceOnUse"><circle cx="4" cy="5" r=".65" fill="#ddd" opacity=".25"/></pattern></defs>
+          <rect width="270" height="188" fill="#999990"/><rect y="120" width="270" height="68" fill="#70645d"/>
+          <path d="M31 29h212l8 87H22Z" fill="url(#chassis)" stroke="#141820" stroke-width="2"/>
+          <path d="M31 30h210l-3 12H35Z" fill="#54595a"/><text x="39" y="40" fill="#d9ddd6" font-size="7">Gradiente</text><text x="192" y="40" fill="#d9ddd6" font-size="7">EXPERT</text>
+          <rect x="46" y="50" width="80" height="40" rx="1" fill="#181d22" stroke="#969da0"/><rect x="138" y="50" width="80" height="40" rx="1" fill="#181d22" stroke="#969da0"/>
+          <rect x="59" y="65" width="56" height="3" fill="#77828b"/><rect x="151" y="65" width="56" height="3" fill="#77828b"/>
+          <rect x="57" y="94" width="160" height="5" fill="#11161b"/><rect x="226" y="57" width="11" height="31" fill="#797c7d"/>
+          <path d="M22 120 L252 120 265 166 10 166Z" fill="#3b4146" stroke="#181c22" stroke-width="2"/>
+          <path d="M36 124h190l15 31H28Z" fill="#d5d1c3" stroke="#111820"/>
+          <g fill="#f4f1e8" stroke="#5d6a71" stroke-width=".6">
+            
+          </g>
+          <path d="M37 131h189 M35 139h193 M32 147h199" stroke="#6b7378" stroke-width="7" stroke-dasharray="11 2" />
+          <rect x="193" y="133" width="25" height="18" rx="2" fill="#4b7e9f"/><rect x="219" y="133" width="11" height="18" rx="2" fill="#34668e"/>
+          <rect width="270" height="188" fill="url(#photoNoise)"/>
+        </svg>
+      </div>
+      <span>Gradiente MSX</span><small>c. 1986</small><i class="sticker-tape tape-photo"></i>
+    </div>
+    <div class="scribble-equation">E = mc²</div>
+  </div>
   <header class="site-header">
     <a class="brand" href="./" aria-label="Genio Academy, início">
-      <span class="brand-symbol" aria-hidden="true">✦</span>
-      <span class="brand-lines"><strong>GENIO</strong><small>ACADEMY</small></span>
+      <span class="flag-strokes" aria-hidden="true"><i></i><i></i><i></i></span>
+      <span class="brand-lines"><strong>GENIO</strong><em>Academy</em></span>
     </a>
-    <div class="header-right"><span class="edition">EDIZIONE / 001</span><span class="header-chip">EST. 2026</span></div>
+    <p class="brand-slogan">Impara. Sbaglia. Migliora.</p>
+    <p class="brand-translation">Aprenda. Erre. Melhore.</p>
   </header>
   <main id="app">
-    <section id="welcome" class="welcome page active">
-      <div class="hero-kicker"><span class="line"></span> INTELLIGENT LEARNING ENGINE <span class="line"></span></div>
-      <h1>Impara. <em>Sbaglia.</em><br>Migliora<span class="point">.</span></h1>
-      <p class="hero-sub">Aprenda. Erre. Melhore.</p>
-      <p class="hero-intro">Seu conhecimento merece mais que um questionário. Escolha uma disciplina ou aceite um desafio surpresa — e descubra o que realmente aprendeu.</p>
-      <div class="section-head"><span>01 / Escolha o seu caminho</span><span class="tiny-rule"></span></div>
+    <section id="welcome" class="welcome page active" aria-labelledby="welcome-title">
+      <p class="hero-kicker"><span aria-hidden="true">✧</span> BENEVENUTO ALLA GENIO ACADEMY <span aria-hidden="true">✧</span></p>
+      <h1 id="welcome-title">Como você quer <span>estudar</span> hoje?</h1>
+      <p class="hero-intro">Escolha uma disciplina ou aceite um desafio surpresa. O Genio acompanha cada resposta e explica o que você pode melhorar.</p>
       <div class="mode-grid" role="group" aria-label="Modalidade do simulado">
         <button type="button" class="mode-card selected" data-mode="impara" aria-pressed="true">
-          <span class="mode-number">01</span><span class="mode-icon" aria-hidden="true">↗</span>
-          <strong>Impara</strong><span class="mode-italic">Eu escolho o desafio.</span>
-          <span class="mode-desc">Concentre o estudo em uma disciplina. Domine cada conceito no seu ritmo.</span>
-          <span class="mode-foot">TREINO DIRECIONADO <span aria-hidden="true">→</span></span>
+          <span class="mode-topline"><span class="mode-illustration" aria-hidden="true">▤</span><span class="mode-number">01 / PRATIQUE</span></span>
+          <strong>IMPARA</strong><span class="mode-italic">Eu escolho meu desafio.</span>
+          <span class="mode-desc">Selecione uma disciplina específica para praticar, revisar e evoluir no seu ritmo.</span>
+          <span class="mode-foot">TREINO DIRECIONADO <span aria-hidden="true">↗</span></span>
         </button>
         <button type="button" class="mode-card" data-mode="sapienza" aria-pressed="false">
-          <span class="mode-number">02</span><span class="mode-icon" aria-hidden="true">✳</span>
-          <strong>Sapienza</strong><span class="mode-italic">O desafio escolhe você.</span>
-          <span class="mode-desc">Todas as disciplinas, em ordem imprevisível. Mostre o que você sabe.</span>
-          <span class="mode-foot">DESAFIO COMPLETO <span aria-hidden="true">→</span></span>
+          <span class="mode-topline"><span class="mode-illustration" aria-hidden="true">♜</span><span class="mode-number">02 / DESAFIE-SE</span></span>
+          <strong>SAPIENZA</strong><span class="mode-italic">O desafio escolhe você.</span>
+          <span class="mode-desc">Genio mistura as disciplinas do semestre de maneira imprevisível. Mostre o que sabe.</span>
+          <span class="mode-foot">DESAFIO COMPLETO <span aria-hidden="true">↗</span></span>
         </button>
       </div>
       <div class="config-panel">
-        <div class="config-title"><span>02 / Prepare seu desafio</span><span class="config-spark">✧</span></div>
-        <div id="subject-wrap" class="field wide">
-          <label for="subject">DISCIPLINA</label>
-          <select id="subject" aria-label="Disciplina">
-            <option value="agil">Projeto Ágil</option>
-            <option value="riscos">Análise de Riscos e Qualidade</option>
-            <option value="planejamento">Planejamento de um Website</option>
-            <option value="criacao">Criação de um Website</option>
-            <option value="interfaces">Evolução das Interfaces</option>
-          </select>
+        <div class="config-title"><span><span class="blue-scribble">✎</span> Prepare seu desafio</span><span class="config-spark" aria-hidden="true">02 / CONFIGURAÇÃO</span></div>
+        <div class="config-fields">
+          <div id="subject-wrap" class="field">
+            <label for="subject">DISCIPLINA</label>
+            <select id="subject" aria-label="Disciplina">
+              <option value="agil">Projeto Ágil</option>
+              <option value="riscos">Análise de Riscos e Qualidade</option>
+              <option value="planejamento">Planejamento de um Website</option>
+              <option value="criacao">Criação de um Website</option>
+              <option value="interfaces">Evolução das Interfaces</option>
+            </select>
+          </div>
+          <p class="sapienza-hint" id="sapienza-hint" hidden>✳ Cinco disciplinas, sem pistas sobre a próxima pergunta.</p>
+          <div class="field"><span class="field-label">NÚMERO DE QUESTÕES</span><div class="pill-group" id="count-group" role="group" aria-label="Quantidade de questões">
+            <button type="button" data-count="5" class="pill">05</button><button type="button" data-count="10" class="pill selected">10</button><button type="button" data-count="15" class="pill">15</button><button type="button" data-count="20" class="pill">20</button>
+          </div></div>
+          <div class="field"><span class="field-label">TEMPO</span><div class="pill-group time-pills" id="time-group" role="group" aria-label="Modalidade de tempo">
+            <button type="button" data-time="none" class="pill selected">Sem limite</button><button type="button" data-time="total" class="pill">Tempo total</button><button type="button" data-time="question" class="pill">Por questão</button>
+          </div></div>
         </div>
-        <p class="sapienza-hint" id="sapienza-hint" hidden>✳ Cinco disciplinas. Nenhuma pista sobre qual será a próxima.</p>
-        <div class="field"><span class="field-label">QUESTÕES</span><div class="pill-group" id="count-group" role="group" aria-label="Quantidade de questões">
-          <button type="button" data-count="5" class="pill">05</button><button type="button" data-count="10" class="pill selected">10</button><button type="button" data-count="15" class="pill">15</button><button type="button" data-count="20" class="pill">20</button>
-        </div></div>
-        <div class="field"><span class="field-label">CRONÔMETRO</span><div class="pill-group time-pills" id="time-group" role="group" aria-label="Modalidade de tempo">
-          <button type="button" data-time="none" class="pill selected">Livre</button><button type="button" data-time="total" class="pill">Total</button><button type="button" data-time="question" class="pill">Por questão</button>
-        </div></div>
         <p class="time-hint" id="time-hint">Sem limite de tempo. Respire e raciocine.</p>
-        <button type="button" id="start-btn" class="primary-btn"><span>INIZIA IL TUO PERCORSO</span><span class="btn-arrow" aria-hidden="true">↗</span></button>
+        <button type="button" id="start-btn" class="primary-btn"><span>COMEÇAR O SIMULADO</span><span class="btn-arrow" aria-hidden="true">➜</span></button>
         <p id="start-notice" class="notice" aria-live="polite"></p>
       </div>
-      <div class="feature-row"><span>✦ 4 ALTERNATIVAS</span><span>✦ CORREÇÃO EXPLICADA</span><span>✦ 5 DISCIPLINAS</span></div>
+      <div class="feature-row"><span>✓ QUATRO ALTERNATIVAS</span><span>✎ CORREÇÃO EXPLICADA</span><span>✧ CINCO DISCIPLINAS</span></div>
     </section>
     <section id="quiz" class="quiz page" aria-label="Simulado">
       <div class="quiz-top"><button id="quit-btn" class="ghost-btn">← Sair do desafio</button><span id="timer" class="timer" aria-live="off"></span></div>
