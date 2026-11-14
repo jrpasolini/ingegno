@@ -85,10 +85,12 @@ async function handler(req,res){
   if(!["GET","HEAD"].includes(req.method))return send(res,405,{error:"Método inválido"});
   const files={"/ingegno/":["index.html","text/html"],"/ingegno/index.html":["index.html","text/html"],
     "/ingegno/app.js":["app.js","text/javascript"],"/ingegno/styles.css":["styles.css","text/css"],
-    "/ingegno/bank.js":["bank.js","text/javascript"]};
+    "/ingegno/bank.js":["bank.js","text/javascript"],
+    "/ingegno/assets/einstein-matricial.webp":["assets/einstein-matricial.webp","image/webp"],
+    "/ingegno/assets/gradiente-msx-polaroid.webp":["assets/gradiente-msx-polaroid.webp","image/webp"]};
   if(!files[path])return send(res,404,{error:"Não encontrado"});
   const [file,mime]=files[path],data=await readFile(new URL("./public/"+file,import.meta.url));
-  res.writeHead(200,{"content-type":mime+"; charset=utf-8","x-content-type-options":"nosniff",
+  res.writeHead(200,{"content-type":mime.startsWith("image/")?mime:mime+"; charset=utf-8","x-content-type-options":"nosniff",
     "content-security-policy":"default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'self'"});
   res.end(req.method==="HEAD"?undefined:data);
 }
