@@ -229,9 +229,10 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
 
 /* Approved nostalgic assets: Einstein dot-matrix print and MSX CRT Polaroid */
 .sticker-einstein{
-  top:54px;
+  top:44px;
   left:max(8px,calc((100vw - 1675px)/2));
-  width:clamp(220px,18vw,315px);
+  width:clamp(235px,19vw,330px);
+  padding-bottom:10px;
   height:auto;
   overflow:visible;
   transform:rotate(-5deg);
@@ -266,7 +267,7 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
   filter:drop-shadow(3px 7px 5px rgba(43,34,26,.22));
 }
 @media (max-width:1499px) and (min-width:1271px){
-  .sticker-einstein{top:88px;left:2px;width:195px}
+  .sticker-einstein{top:78px;left:2px;width:210px}
   .polaroid-msx{right:2px;top:440px;width:172px}
 }
 @media (max-width:1270px){
