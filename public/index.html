@@ -1,0 +1,91 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#10211d">
+  <meta name="description" content="Genio Academy: simulados inteligentes para aprender, errar e melhorar.">
+  <title>GENIO Academy · Impara. Sbaglia. Migliora.</title>
+  <link rel="stylesheet" href="./styles.css">
+  <script type="module" src="./app.js"></script>
+</head>
+<body>
+  <div class="halo halo-a" aria-hidden="true"></div>
+  <div class="halo halo-b" aria-hidden="true"></div>
+  <header class="site-header">
+    <a class="brand" href="./" aria-label="Genio Academy, início">
+      <span class="brand-symbol" aria-hidden="true">✦</span>
+      <span class="brand-lines"><strong>GENIO</strong><small>ACADEMY</small></span>
+    </a>
+    <div class="header-right"><span class="edition">EDIZIONE / 001</span><span class="header-chip">EST. 2026</span></div>
+  </header>
+  <main id="app">
+    <section id="welcome" class="welcome page active">
+      <div class="hero-kicker"><span class="line"></span> INTELLIGENT LEARNING ENGINE <span class="line"></span></div>
+      <h1>Impara. <em>Sbaglia.</em><br>Migliora<span class="point">.</span></h1>
+      <p class="hero-sub">Aprenda. Erre. Melhore.</p>
+      <p class="hero-intro">Seu conhecimento merece mais que um questionário. Escolha uma disciplina ou aceite um desafio surpresa — e descubra o que realmente aprendeu.</p>
+      <div class="section-head"><span>01 / Escolha o seu caminho</span><span class="tiny-rule"></span></div>
+      <div class="mode-grid" role="group" aria-label="Modalidade do simulado">
+        <button type="button" class="mode-card selected" data-mode="impara" aria-pressed="true">
+          <span class="mode-number">01</span><span class="mode-icon" aria-hidden="true">↗</span>
+          <strong>Impara</strong><span class="mode-italic">Eu escolho o desafio.</span>
+          <span class="mode-desc">Concentre o estudo em uma disciplina. Domine cada conceito no seu ritmo.</span>
+          <span class="mode-foot">TREINO DIRECIONADO <span aria-hidden="true">→</span></span>
+        </button>
+        <button type="button" class="mode-card" data-mode="sapienza" aria-pressed="false">
+          <span class="mode-number">02</span><span class="mode-icon" aria-hidden="true">✳</span>
+          <strong>Sapienza</strong><span class="mode-italic">O desafio escolhe você.</span>
+          <span class="mode-desc">Todas as disciplinas, em ordem imprevisível. Mostre o que você sabe.</span>
+          <span class="mode-foot">DESAFIO COMPLETO <span aria-hidden="true">→</span></span>
+        </button>
+      </div>
+      <div class="config-panel">
+        <div class="config-title"><span>02 / Prepare seu desafio</span><span class="config-spark">✧</span></div>
+        <div id="subject-wrap" class="field wide">
+          <label for="subject">DISCIPLINA</label>
+          <select id="subject" aria-label="Disciplina">
+            <option value="agil">Projeto Ágil</option>
+            <option value="riscos">Análise de Riscos e Qualidade</option>
+            <option value="planejamento">Planejamento de um Website</option>
+            <option value="criacao">Criação de um Website</option>
+            <option value="interfaces">Evolução das Interfaces</option>
+          </select>
+        </div>
+        <p class="sapienza-hint" id="sapienza-hint" hidden>✳ Cinco disciplinas. Nenhuma pista sobre qual será a próxima.</p>
+        <div class="field"><span class="field-label">QUESTÕES</span><div class="pill-group" id="count-group" role="group" aria-label="Quantidade de questões">
+          <button type="button" data-count="5" class="pill">05</button><button type="button" data-count="10" class="pill selected">10</button><button type="button" data-count="15" class="pill">15</button><button type="button" data-count="20" class="pill">20</button>
+        </div></div>
+        <div class="field"><span class="field-label">CRONÔMETRO</span><div class="pill-group time-pills" id="time-group" role="group" aria-label="Modalidade de tempo">
+          <button type="button" data-time="none" class="pill selected">Livre</button><button type="button" data-time="total" class="pill">Total</button><button type="button" data-time="question" class="pill">Por questão</button>
+        </div></div>
+        <p class="time-hint" id="time-hint">Sem limite de tempo. Respire e raciocine.</p>
+        <button type="button" id="start-btn" class="primary-btn"><span>INIZIA IL TUO PERCORSO</span><span class="btn-arrow" aria-hidden="true">↗</span></button>
+        <p id="start-notice" class="notice" aria-live="polite"></p>
+      </div>
+      <div class="feature-row"><span>✦ 4 ALTERNATIVAS</span><span>✦ CORREÇÃO EXPLICADA</span><span>✦ 5 DISCIPLINAS</span></div>
+    </section>
+    <section id="quiz" class="quiz page" aria-label="Simulado">
+      <div class="quiz-top"><button id="quit-btn" class="ghost-btn">← Sair do desafio</button><span id="timer" class="timer" aria-live="off"></span></div>
+      <div class="quiz-progress-text"><span id="counter">QUESTÃO 01 / 10</span><span id="quiz-mode">IMPARA</span></div>
+      <div class="progress-track"><div id="progress-fill" class="progress-fill"></div></div>
+      <div class="question-paper"><div class="question-kicker" id="question-tag">CONHECIMENTO / 01</div>
+        <h2 id="question-text">O que você aprendeu?</h2>
+        <div id="answers" class="answers" role="group" aria-label="Alternativas de resposta"></div>
+      </div>
+      <div class="quiz-bottom"><span id="answered-summary">Escolha uma alternativa.</span><button id="next-btn" class="primary-btn compact" disabled>PRÓXIMA QUESTÃO →</button></div>
+      <p id="quiz-notice" class="notice" aria-live="polite"></p>
+    </section>
+    <section id="result" class="result page" aria-label="Resultado do simulado">
+      <div class="result-eyebrow">GENIO / IL VERDETTO</div>
+      <h2>Ogni errore<br>insegna<span class="point">.</span></h2>
+      <p class="result-sub">Cada erro ensina alguma coisa. Veja sua evolução.</p>
+      <div class="score-block"><div class="score-big" id="score">0<span>/0</span></div><div class="score-meta">
+        <span id="percent">0% DE ACERTOS</span><span id="duration">00:00 DE ESTUDO</span><span id="score-caption">Um passo de cada vez.</span></div></div>
+      <h3 class="review-title">Revisão comentada <span id="review-count"></span></h3>
+      <div id="review" class="review-list"></div>
+      <button id="again-btn" class="primary-btn">NOVO DESAFIO <span aria-hidden="true">↗</span></button>
+    </section>
+  </main>
+  <footer class="site-footer"><span>GENIO ACADEMY <span class="footer-muted">POWERED BY INGEGNO</span></span><span class="footer-note">IMPARA · SBAGLIA · MIGLIORA</span><a href="https://github.com/jrpasolini/ingegno" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></footer>
+</body></html>
