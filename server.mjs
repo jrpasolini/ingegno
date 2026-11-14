@@ -89,7 +89,7 @@ async function handler(req,res){
   if(!files[path])return send(res,404,{error:"Não encontrado"});
   const [file,mime]=files[path],data=await readFile(new URL("./public/"+file,import.meta.url));
   res.writeHead(200,{"content-type":mime+"; charset=utf-8","x-content-type-options":"nosniff",
-    "content-security-policy":"default-src 'self'; style-src 'self'; script-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'self'"});
+    "content-security-policy":"default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'self'"});
   res.end(req.method==="HEAD"?undefined:data);
 }
 http.createServer((req,res)=>Promise.resolve(handler(req,res)).catch(e=>{
