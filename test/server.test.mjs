@@ -19,6 +19,11 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const home=await fetch(origin+"/ingegno/");
     assert.equal(home.status,200);
     assert.match(await home.text(),/GENIO/);
+    const portrait=await fetch(origin+"/ingegno/assets/einstein-matricial-completo.png");
+    assert.equal(portrait.status,200);
+    assert.equal(portrait.headers.get("content-type"),"image/png");
+    const portraitBytes=Buffer.from(await portrait.arrayBuffer());
+    assert.equal(portraitBytes.subarray(0,8).toString("hex"),"89504e470d0a1a0a");
     const request=await fetch(origin+"/ingegno/api/session",{method:"POST",headers:{"content-type":"application/json"},
       body:JSON.stringify({mode:"sapienza",count:5})});
     assert.equal(request.status,200);
