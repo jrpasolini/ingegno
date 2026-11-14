@@ -185,19 +185,19 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .note-right{top:378px;right:var(--margin);border:2px solid #2c4a89;border-radius:53% 47% 45% 55%;padding:9px 12px;transform:rotate(8deg);text-align:center;font-size:21px;line-height:1.2}
 .note-arrow{position:absolute;top:96%;left:-14px;font-size:28px}
 .scribble{position:absolute;stroke:#365996;pointer-events:none}
-.scribble-parabola{width:136px;top:668px;right:var(--margin)}
-.scribble-atom{width:144px;top:700px;left:var(--margin)}
+.scribble-parabola{width:136px;top:640px;right:var(--margin)}
+.scribble-atom{width:144px;top:720px;left:var(--margin)}
 .polaroid-msx{position:absolute;top:16px;right:var(--edge);width:244px;transform:rotate(2deg);transform-origin:center center;padding:0;border:0;background:none;box-shadow:none;text-align:center;z-index:1}
 .scribble-equation{position:absolute;right:var(--margin);top:960px;transform:rotate(-11deg);font:italic 32px Georgia,serif;color:#6e7476;text-decoration:underline;pointer-events:none}
 .scribble-basic{position:absolute;margin:0;max-width:148px;color:#243f86;font:italic 23px/1.08 "Comic Sans MS","Segoe Print","Bradley Hand",cursive;pointer-events:none;white-space:normal}
 .basic-print{top:500px;left:var(--margin);transform:rotate(-7deg)}
-.basic-goto{top:560px;left:var(--margin);transform:rotate(6deg);font-size:25px}
-.basic-list{top:625px;left:var(--margin);transform:rotate(-5deg);font-size:32px}
-.basic-for{top:868px;left:var(--margin);max-width:136px;transform:rotate(-4deg);font-size:18px}
+.basic-goto{top:590px;left:var(--margin);transform:rotate(6deg);font-size:25px}
+.basic-list{top:650px;left:var(--margin);transform:rotate(-5deg);font-size:32px}
+.basic-for{top:890px;left:var(--margin);max-width:136px;transform:rotate(-4deg);font-size:18px}
 .basic-run{top:528px;right:var(--margin);transform:rotate(7deg);font-size:30px}
 .basic-screen{top:586px;right:var(--margin);transform:rotate(-5deg);font-size:22px}
-.basic-color{top:792px;right:var(--margin);transform:rotate(4deg);font-size:21px}
-.basic-beep{top:868px;right:var(--margin);transform:rotate(10deg);font-size:30px}
+.basic-color{top:830px;right:var(--margin);transform:rotate(4deg);font-size:21px}
+.basic-beep{top:895px;right:var(--margin);transform:rotate(10deg);font-size:30px}
 #quiz,#result{color:var(--ink);background:rgba(19,37,31,.97);padding:35px 28px;margin:25px auto 0;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 30px rgba(35,44,48,.15)}
 body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
 @media(max-width:1110px){main{max-width:940px}}
