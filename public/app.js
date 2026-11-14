@@ -6,6 +6,19 @@ const state={mode:"impara",count:10,time:"none",questions:[],answers:[],current:
 const escape=s=>String(s??"").replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 function visible(id){for(const page of document.querySelectorAll(".page"))page.classList.toggle("active",page.id===id);window.scrollTo({top:0,behavior:"smooth"});}
 function setNotice(id,message){$(id).textContent=message||"";}
+// Highlight only known exam topics/actions; every source fragment is escaped.
+function markStudyText(value,terms){
+  const source=String(value),lower=source.toLocaleLowerCase('pt-BR');let cursor=0,html="";
+  const words=[...new Set(terms.filter(Boolean))].sort((a,b)=>b.length-a.length);
+  while(cursor<source.length){
+    let next=-1,term="";
+    for(const word of words){const index=lower.indexOf(word.toLocaleLowerCase('pt-BR'),cursor);if(index>=0&&(next<0||index<next)){next=index;term=word;}}
+    if(next<0){html+=escape(source.slice(cursor));break;}
+    html+=escape(source.slice(cursor,next))+'<strong class="pen-key">'+escape(source.slice(next,next+term.length))+'</strong>';
+    cursor=next+term.length;
+  }
+  return html;
+}
 document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener("click",()=>{
   state.mode=button.dataset.mode;
   document.querySelectorAll("[data-mode]").forEach(b=>{const active=b===button;b.classList.toggle("selected",active);b.setAttribute("aria-pressed",String(active));});
@@ -121,8 +134,9 @@ async function finish(){
   const analysis=analyzePerformance(grade.results),tutor=grade.tutor||{...analysis,source:"local"};
   $("strength-topic").textContent=analysis.strengths.map(t=>t.label+` (${t.correct}/${t.total})`).join("; ")||"Continue praticando os tópicos avaliados.";
   $("priority-topic").textContent=analysis.priorities.map(t=>t.label+` (${t.total-t.correct} para revisar)`).join("; ")||"Nenhum erro nos tópicos avaliados.";
-  $("genio-reading").textContent=tutor.summary;
-  $("study-plan").innerHTML=tutor.steps.map(s=>'<li>'+escape(s)+'</li>').join("");
+  const studyTerms=[...grade.results.map(q=>q.topic),'explique','refaça','novo desafio',grade.correct+' de '+grade.total];
+  $("genio-reading").innerHTML=markStudyText(tutor.summary,studyTerms);
+  $("study-plan").innerHTML=tutor.steps.map(s=>'<li><span>'+markStudyText(s,studyTerms)+'</span></li>').join("");
   $("tutor-source").textContent=tutor.source==="ai"?"Parecer por IA · "+tutor.model+" · baseado nesta tentativa; pode conter imprecisões.":"Leitura dos seus acertos e erros nesta tentativa · sem parecer gerado por IA.";
   $("review-errors").setAttribute("aria-pressed","false");$("review-empty").hidden=true;
   $("review-errors").textContent="Revisar meus erros";
