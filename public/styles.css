@@ -351,6 +351,50 @@ body:has(#result.active) .notebook-decor{opacity:1}
 }
 
 /* Hand-corrected exam: drawn strokes, handwriting and circled alternatives. */
+/* Printed exam sheet: opaque stock, typewriter text and blue ballpoint selection. */
+#quiz{
+  color:var(--paper-ink);border:1px solid var(--paper-border);border-radius:13px;
+  padding:28px 32px 24px;margin:18px auto 0;
+  background-color:#fffdf5;
+  background-image:radial-gradient(ellipse at 12% 15%,#b8a98a13,transparent 60%),repeating-linear-gradient(115deg,#6f5a3905 0 1px,transparent 1px 5px);
+  box-shadow:3px 5px 0 #193a7512,0 10px 28px #51433212;
+  font-family:"Courier New",Courier,monospace;
+}
+#quiz .quiz-top{padding-bottom:18px;border-bottom:1px solid #193a7533;flex-wrap:wrap}
+#quiz .ghost-btn{color:var(--bic);font:700 13px/1.5 "Courier New",monospace;letter-spacing:0;padding:6px 0}
+#quiz .ghost-btn:hover{color:var(--teacher-red);text-decoration:underline;text-underline-offset:4px}
+#quiz .timer{color:var(--bic);border:1px dashed #193a7580;border-radius:5px;padding:8px 11px;font:700 13px/1.3 "Courier New",monospace;letter-spacing:.03em}
+.exam-heading{text-align:center;padding:25px 0 4px}
+.exam-heading h2{font:700 clamp(25px,4vw,35px)/1.3 "Courier New",monospace;text-transform:uppercase;letter-spacing:.04em;margin:8px 0 12px;color:var(--paper-ink)}
+.exam-heading p{font:12px/1.6 "Courier New",monospace;margin:0 0 6px;color:#4d5a70}
+.exam-heading p:first-child{font-weight:bold;letter-spacing:.14em;font-size:11px;color:var(--bic)}
+#quiz .quiz-progress-text{color:var(--bic);font:700 12px/1.5 "Courier New",monospace;letter-spacing:.05em;margin-top:22px;margin-bottom:10px;flex-wrap:wrap}
+#quiz .progress-track{height:5px;background:#dce2e9;border-radius:3px;overflow:hidden}
+#quiz .progress-fill{background:var(--bic);border-radius:3px}
+#quiz .question-paper{border:0;background:none;padding:27px 0 12px;margin-top:0}
+#quiz .question-kicker{color:#526078;font:700 11px/1.6 "Courier New",monospace;letter-spacing:.08em;padding-bottom:12px;border-bottom:1px dashed #193a7540;margin-bottom:22px}
+#quiz .question-paper h2{font:700 clamp(20px,2.5vw,27px)/1.55 "Courier New",monospace;letter-spacing:-.035em;max-width:none;margin-bottom:27px;color:var(--paper-ink);overflow-wrap:anywhere}
+#quiz .answers{gap:12px}
+#quiz .answer{position:relative;border:1px solid #193a753b;border-radius:7px;background:#fffdf580;color:var(--paper-ink);font:16px/1.6 "Courier New",monospace;padding:16px 18px;min-height:67px;gap:17px;transition:background .15s,border-color .15s}
+#quiz .answer:hover{background:#e9eef580;border-color:var(--bic)}
+#quiz .answer.selected{background:#e8eef7;border-color:var(--bic);box-shadow:inset 3px 0 var(--bic)}
+#quiz .letter{position:relative;flex-shrink:0;border:0;color:var(--bic);font:700 17px "Courier New",monospace;width:32px;height:32px}
+#quiz .letter::after{content:")";position:absolute;right:-1px;font-weight:normal}
+#quiz .answer.selected .letter::before{content:"";position:absolute;inset:-2px -3px;border:2px solid var(--bic);border-radius:47% 53% 43% 57%;transform:rotate(-11deg)}
+#quiz .quiz-bottom{border-top:1px solid #193a7540;padding-top:21px;margin-top:10px}
+#quiz #answered-summary{color:var(--bic);font:600 23px/1.3 "Caveat","Segoe Print",cursive}
+#quiz .primary-btn{color:#fffdf5;background:var(--bic);border:1px solid var(--bic);border-radius:8px;box-shadow:2px 3px 0 #193a7526;font:700 13px/1.4 "Courier New",monospace;letter-spacing:0;padding:17px 20px}
+#quiz .primary-btn:hover:not(:disabled){background:#254b86}
+#quiz .primary-btn:disabled{opacity:.5}
+#quiz .notice{color:#526078;font:12px/1.6 "Courier New",monospace;margin:18px 0 0}
+@media(max-width:750px){
+  #quiz{padding:20px 18px;margin-top:10px}
+  #quiz .quiz-top{gap:12px}.exam-heading{padding-top:22px}.exam-heading p{font-size:11px}
+  #quiz .question-paper{padding-top:23px}#quiz .question-paper h2{font-size:21px;line-height:1.5}
+  #quiz .answer{font-size:15px;padding:14px 12px;gap:12px;min-height:65px}
+  #quiz .quiz-bottom{align-items:stretch;flex-direction:column;gap:16px}
+  #quiz .primary-btn{width:100%;justify-content:center;min-width:0}
+}
 .genio-note{grid-template-columns:170px minmax(0,1fr);gap:30px;padding:30px 32px}
 .genio-signature img{width:145px;margin-bottom:12px}
 .genio-signature h3{font-size:27px;padding:8px 10px;white-space:nowrap}
