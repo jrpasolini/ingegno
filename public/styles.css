@@ -253,7 +253,7 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
 .polaroid-msx{
   top:414px;
   right:max(5px,calc((100vw - 1630px)/2));
-  width:clamp(175px,14vw,252px);
+  width:clamp(201.25px,16.1vw,289.8px);
   padding:0;
   border:0;
   background:none;
@@ -268,7 +268,7 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
 }
 @media (max-width:1499px) and (min-width:1271px){
   .sticker-einstein{top:78px;left:2px;width:210px}
-  .polaroid-msx{right:2px;top:440px;width:172px}
+  .polaroid-msx{right:2px;top:440px;width:197.8px}
 }
 @media (max-width:1270px){
   .sticker-einstein,.polaroid-msx{display:none}
