@@ -9,7 +9,7 @@ document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener
   state.mode=button.dataset.mode;
   document.querySelectorAll("[data-mode]").forEach(b=>{const active=b===button;b.classList.toggle("selected",active);b.setAttribute("aria-pressed",String(active));});
   const sap=state.mode==="sapienza";$("subject-wrap").hidden=sap;$("sapienza-hint").hidden=!sap;
-  $("start-btn").querySelector("span").textContent=sap?"ACCETTA LA SFIDA":"INIZIA IL TUO PERCORSO";
+  $("start-btn").querySelector("span").textContent=sap?"ACEITAR O DESAFIO":"COMEÇAR O SIMULADO";
 }));
 document.querySelectorAll("[data-count]").forEach(button=>button.addEventListener("click",()=>{
   state.count=Number(button.dataset.count);
