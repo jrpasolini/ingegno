@@ -126,7 +126,7 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .welcome .mode-grid{gap:20px}
 .welcome .mode-card{
   appearance:none;min-height:245px;border:1.5px solid var(--paper-border);border-radius:16px;
-  background:linear-gradient(140deg,rgba(255,253,245,.94),rgba(248,244,230,.88));
+  background:linear-gradient(140deg,#fffdf5,#f8f4e6);
   color:var(--paper-ink);padding:20px 26px;text-align:left;
   box-shadow:2px 5px 0 rgba(24,55,104,.085),0 2px 11px rgba(38,36,29,.09);
   transition:transform .18s,border-color .18s,box-shadow .18s;
@@ -144,7 +144,8 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .welcome .mode-foot span{color:var(--teacher-red);font-size:18px}
 .welcome .config-panel{
   border:1.5px solid var(--paper-border);border-radius:15px;
-  background:rgba(255,255,248,.73);padding:19px 24px 23px;margin-top:22px;
+  /* Opaque paper keeps margin illustrations from bleeding into the controls. */
+  background:#fffff8;padding:19px 24px 23px;margin-top:22px;
   box-shadow:2px 4px 0 rgba(24,55,104,.075);text-align:left;
 }
 .welcome .config-title{display:flex;justify-content:space-between;align-items:center;margin:0 0 19px;color:var(--paper-ink);font:700 19px/1.2 Georgia,serif;letter-spacing:0;text-transform:none}
@@ -180,7 +181,7 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .sticker-tape{position:absolute;display:block;width:61px;height:20px;border:1px solid rgba(142,121,98,.18);background:linear-gradient(115deg,rgba(255,255,251,.50),rgba(214,198,163,.47));box-shadow:1px 2px 2px rgba(34,27,24,.10);transform:rotate(-16deg);z-index:2}
 .tape-top{top:-8px;left:22%}.tape-bottom{bottom:18px;left:8%}
 .paper-note{position:absolute;font:italic 26px/1.28 "Comic Sans MS","Segoe Print","Bradley Hand",cursive;color:#2a4c94;pointer-events:none}
-.note-left{top:236px;left:calc(var(--margin) + 8px);display:flex;flex-direction:column;gap:3px;transform:rotate(-8deg)}
+.note-left{top:340px;left:calc(var(--margin) + 8px);display:flex;flex-direction:column;gap:3px;transform:rotate(-8deg)}
 .note-right{top:378px;right:var(--margin);border:2px solid #2c4a89;border-radius:53% 47% 45% 55%;padding:9px 12px;transform:rotate(8deg);text-align:center;font-size:21px;line-height:1.2}
 .note-arrow{position:absolute;top:96%;left:-14px;font-size:28px}
 .scribble{position:absolute;stroke:#365996;pointer-events:none}
@@ -189,9 +190,9 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .polaroid-msx{position:absolute;top:16px;right:var(--edge);width:244px;transform:rotate(2deg);transform-origin:center center;padding:0;border:0;background:none;box-shadow:none;text-align:center;z-index:1}
 .scribble-equation{position:absolute;right:var(--margin);top:960px;transform:rotate(-11deg);font:italic 32px Georgia,serif;color:#6e7476;text-decoration:underline;pointer-events:none}
 .scribble-basic{position:absolute;margin:0;max-width:148px;color:#243f86;font:italic 23px/1.08 "Comic Sans MS","Segoe Print","Bradley Hand",cursive;pointer-events:none;white-space:normal}
-.basic-print{top:408px;left:var(--margin);transform:rotate(-7deg)}
-.basic-goto{top:498px;left:var(--margin);transform:rotate(6deg);font-size:25px}
-.basic-list{top:592px;left:var(--margin);transform:rotate(-5deg);font-size:32px}
+.basic-print{top:500px;left:var(--margin);transform:rotate(-7deg)}
+.basic-goto{top:560px;left:var(--margin);transform:rotate(6deg);font-size:25px}
+.basic-list{top:625px;left:var(--margin);transform:rotate(-5deg);font-size:32px}
 .basic-for{top:868px;left:var(--margin);max-width:136px;transform:rotate(-4deg);font-size:18px}
 .basic-run{top:528px;right:var(--margin);transform:rotate(7deg);font-size:30px}
 .basic-screen{top:586px;right:var(--margin);transform:rotate(-5deg);font-size:22px}
@@ -257,15 +258,9 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
 }
 .tractor-page img{
   display:block;width:100%;height:auto;
-  aspect-ratio:370/252;
   object-fit:contain;object-position:center center;
   image-rendering:crisp-edges;image-rendering:pixelated;
   background:transparent;
-}
-.tractor-caption{
-  display:block;margin:6px 0 1px;text-align:center;
-  font:700 9px/1 "Courier New",ui-monospace,monospace;
-  letter-spacing:.2em;color:#161616;
 }
 .sticker-einstein .tape-top{width:72px;height:20px;top:-9px;left:16%;transform:rotate(-18deg)}
 .sticker-einstein .tape-bottom{width:68px;height:18px;bottom:10px;left:7%;transform:rotate(12deg)}
@@ -275,7 +270,7 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
   filter:drop-shadow(3px 7px 5px rgba(43,34,26,.22));
 }
 @media (min-width:1500px){
-  .sticker-einstein{width:336px}
+  .sticker-einstein{width:360px}
   .polaroid-msx{width:286px}
   .paper-note{font-size:28px}
   .scribble-parabola{width:210px}
