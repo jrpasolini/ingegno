@@ -1,5 +1,5 @@
 import {SUBJECTS,createDemoQuestions} from "./bank.js";
-import {analyzePerformance} from "./performance.js";
+import {analyzePerformance,teacherVerdict} from "./performance.js";
 const $=id=>document.getElementById(id);
 const state={mode:"impara",count:10,time:"none",questions:[],answers:[],current:0,sessionId:null,demoQuestions:[],
   started:0,ticker:null,deadline:0,questionDeadline:0,finishing:false};
@@ -111,6 +111,9 @@ async function finish(){
     state.finishing=false;return;
   }
   $("score").innerHTML=grade.correct+"<span>/"+grade.total+"</span>";
+  const verdict=teacherVerdict(grade.correct,grade.total);
+  $("pen-grade").textContent=verdict.note;$("pen-verdict").textContent=verdict.caption;
+  $("teacher-grade").dataset.ink=verdict.ink;
   $("percent").textContent=grade.percentage+"% DE ACERTOS";
   $("duration").textContent=displayClock(elapsedSeconds)+" DE ESTUDO";
   $("score-caption").textContent=grade.percentage>=80?"Bravo! Continue aprofundando.":grade.percentage>=50?"Um bom começo. Revise os conceitos.":"Cada erro é uma nova oportunidade de aprender.";
@@ -125,10 +128,12 @@ async function finish(){
   $("review-errors").textContent="Revisar meus erros";
   $("review").innerHTML=grade.results.map((q,i)=>{
     const chosen=q.chosenIndex===null?"Sem resposta":q.options[q.chosenIndex];
-    return '<article class="review-card '+(q.correct?'is-correct':'is-incorrect')+'"><div class="review-meta"><span>'+escape(q.subject)+' · '+escape(q.topic)+'</span><span>'+
-      (q.correct?"✓ ACERTOU":"✗ REVISAR")+'</span></div><h4>'+String(i+1).padStart(2,"0")+'. '+escape(q.prompt)+'</h4>'+
-      '<p class="'+(q.correct?"right-answer":"wrong-answer")+'">Sua resposta: '+escape(chosen)+'</p>'+
-      '<p class="right-answer">Resposta correta: '+escape(q.options[q.correctIndex])+'</p>'+
+    const letters="ABCD",annotation=q.correct?(i%2?'Muito bem!':'Boa!'):(q.chosenIndex===null?'Faltou responder!':'Reveja este conceito!');
+    return '<article class="review-card '+(q.correct?'is-correct':'is-incorrect')+'"><svg class="pen-mark" aria-hidden="true"><use href="#'+(q.correct?'pen-check':'pen-cross')+'"/></svg><div class="review-meta"><span>'+escape(q.subject)+' · '+escape(q.topic)+'</span><span class="sr-only">'+
+      (q.correct?"Resposta correta":"Resposta incorreta ou não respondida")+'</span></div><h4>'+String(i+1).padStart(2,"0")+'. '+escape(q.prompt)+'</h4>'+
+      '<p class="'+(q.correct?"right-answer":"wrong-answer")+'">Sua resposta: <span class="answer-circle">'+(q.chosenIndex===null?'—':letters[q.chosenIndex])+'</span> '+escape(chosen)+'</p>'+
+      '<p class="right-answer">Gabarito: <span class="key-letter">'+letters[q.correctIndex]+'</span> '+escape(q.options[q.correctIndex])+'</p>'+
+      '<div class="pen-annotation">'+annotation+'</div>'+
       '<p class="explain"><strong>Genio explica:</strong> '+escape(q.explanation)+'</p></article>';
   }).join("");
   visible("result");state.finishing=false;

@@ -1,4 +1,10 @@
 // Observations describe this attempt, never mastery beyond the sampled questions.
+export function teacherVerdict(correct,total){
+  const ratio=total>0?correct/total:0;
+  return {note:(ratio*10).toLocaleString('pt-BR',{maximumFractionDigits:1}),
+    caption:correct===0?'Zero. Vamos revisar juntos!':ratio>=.8?'Parabéns!':ratio>=.5?'Bom!':'Precisa melhorar',
+    ink:ratio>=.5?'blue':'red'};
+}
 export function analyzePerformance(results) {
   const groups=new Map();
   for(const q of results){

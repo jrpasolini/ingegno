@@ -1,7 +1,16 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {analyzePerformance} from '../public/performance.js';
+import {analyzePerformance,teacherVerdict} from '../public/performance.js';
 const q=(topic,correct)=>({subject:'Projeto Ágil',topic,correct});
+test('nota manuscrita usa a proporção real e avaliações coerentes',()=>{
+  assert.deepEqual(teacherVerdict(0,5),{note:'0',caption:'Zero. Vamos revisar juntos!',ink:'red'});
+  assert.equal(teacherVerdict(2,5).caption,'Precisa melhorar');
+  assert.equal(teacherVerdict(3,5).note,'6');
+  assert.equal(teacherVerdict(3,5).caption,'Bom!');
+  assert.equal(teacherVerdict(4,5).caption,'Parabéns!');
+  assert.equal(teacherVerdict(5,5).note,'10');
+  assert.equal(teacherVerdict(1,3).note,'3,3');
+});
 test('prioriza erros por tópico e não trata acerto parcial como ponto forte',()=>{
   const result=analyzePerformance([q('Scrum',true),q('Scrum',false),q('XP',true),q('Manifesto',false),q('Manifesto',false)]);
   assert.deepEqual(result.strengths.map(t=>t.label),['Projeto Ágil · XP']);
