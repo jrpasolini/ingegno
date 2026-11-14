@@ -175,28 +175,31 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .welcome .feature-row{margin:20px 0 0;gap:20px;color:var(--bic);font:700 10px "Courier New",monospace;letter-spacing:.08em}
 .site-footer{position:relative;z-index:1;max-width:1040px;justify-content:center;gap:28px;padding:5px 20px 36px;border:0;color:var(--bic);font:bold 11px Georgia,serif;letter-spacing:0}
 .site-footer .footer-muted,.site-footer .footer-note{color:#616a76}.site-footer a{font:700 10px "Courier New",monospace}
-.notebook-decor{position:absolute;inset:0;overflow:hidden;pointer-events:none;z-index:0;min-height:900px}
-.sticker-einstein{position:absolute;top:18px;left:max(12px,calc((100vw - 1320px)/2));width:156px;transform:rotate(-4deg);filter:drop-shadow(2px 4px 2px rgba(58,53,48,.19))}
-.sticker-einstein svg{display:block;width:100%;height:auto}
-.sticker-tape{position:absolute;display:block;width:61px;height:20px;border:1px solid rgba(142,121,98,.18);background:linear-gradient(115deg,rgba(255,255,251,.50),rgba(214,198,163,.47));box-shadow:1px 2px 2px rgba(34,27,24,.10);transform:rotate(-16deg)}
-.tape-top{top:-3px;left:-16px}.tape-bottom{bottom:7px;left:-13px}
-.paper-note{font:italic 20px/1.38 "Comic Sans MS","Segoe Print",cursive;color:#2a4c94;transform:rotate(-9deg)}
-.note-left{position:absolute;top:330px;left:max(13px,calc((100vw - 1440px)/2));display:flex;flex-direction:column;gap:4px}
-.note-right{position:absolute;top:39px;right:max(26px,calc((100vw - 1420px)/2));border:2px solid #2c4a89;border-radius:53% 47% 45% 55%;padding:10px 18px;transform:rotate(11deg);text-align:center;font-size:17px}
-.note-arrow{position:absolute;top:95%;left:-17px;font-size:25px}
+.notebook-decor{--edge:max(16px,calc((100vw - 1040px)/2 - 300px));--margin:max(10px,calc((100vw - 1040px)/2 - 148px));position:absolute;inset:0;overflow:hidden;pointer-events:none;user-select:none;z-index:0;min-height:980px}
+.sticker-einstein{position:absolute;top:14px;left:var(--edge);width:292px;transform:rotate(-1.6deg);transform-origin:center center;filter:drop-shadow(2px 4px 2px rgba(58,53,48,.18));z-index:1;overflow:visible}
+.sticker-tape{position:absolute;display:block;width:61px;height:20px;border:1px solid rgba(142,121,98,.18);background:linear-gradient(115deg,rgba(255,255,251,.50),rgba(214,198,163,.47));box-shadow:1px 2px 2px rgba(34,27,24,.10);transform:rotate(-16deg);z-index:2}
+.tape-top{top:-8px;left:22%}.tape-bottom{bottom:18px;left:8%}
+.paper-note{position:absolute;font:italic 26px/1.28 "Comic Sans MS","Segoe Print","Bradley Hand",cursive;color:#2a4c94;pointer-events:none}
+.note-left{top:236px;left:calc(var(--margin) + 8px);display:flex;flex-direction:column;gap:3px;transform:rotate(-8deg)}
+.note-right{top:378px;right:var(--margin);border:2px solid #2c4a89;border-radius:53% 47% 45% 55%;padding:9px 12px;transform:rotate(8deg);text-align:center;font-size:21px;line-height:1.2}
+.note-arrow{position:absolute;top:96%;left:-14px;font-size:28px}
 .scribble{position:absolute;stroke:#365996;pointer-events:none}
-.scribble-parabola{width:140px;top:273px;right:max(12px,calc((100vw - 1440px)/2))}
-.scribble-atom{width:120px;top:690px;left:max(10px,calc((100vw - 1440px)/2))}
-.polaroid-msx{position:absolute;top:494px;right:max(7px,calc((100vw - 1460px)/2));width:165px;transform:rotate(7deg);padding:10px 10px 20px;background:#fffaf1;box-shadow:2px 5px 8px rgba(36,31,26,.24);border:1px solid rgba(138,132,115,.5);text-align:center}
-.polaroid-photo{width:100%;background:#3f4853}.polaroid-photo svg{width:100%;height:auto;display:block}
-.polaroid-msx>span{display:block;color:#2d4375;font:italic 17px "Comic Sans MS",cursive;margin:7px 0 0}
-.polaroid-msx small{font:italic 13px "Comic Sans MS",cursive;color:#394d79}
-.tape-photo{left:50%;top:-9px;transform:translateX(-50%) rotate(10deg)}
-.scribble-equation{position:absolute;right:max(30px,calc((100vw - 1420px)/2));top:795px;transform:rotate(-14deg);font:italic 22px Georgia,serif;color:#6e7476;text-decoration:underline}
+.scribble-parabola{width:136px;top:668px;right:var(--margin)}
+.scribble-atom{width:144px;top:700px;left:var(--margin)}
+.polaroid-msx{position:absolute;top:16px;right:var(--edge);width:244px;transform:rotate(2deg);transform-origin:center center;padding:0;border:0;background:none;box-shadow:none;text-align:center;z-index:1}
+.scribble-equation{position:absolute;right:var(--margin);top:960px;transform:rotate(-11deg);font:italic 32px Georgia,serif;color:#6e7476;text-decoration:underline;pointer-events:none}
+.scribble-basic{position:absolute;margin:0;max-width:148px;color:#243f86;font:italic 23px/1.08 "Comic Sans MS","Segoe Print","Bradley Hand",cursive;pointer-events:none;white-space:normal}
+.basic-print{top:408px;left:var(--margin);transform:rotate(-7deg)}
+.basic-goto{top:498px;left:var(--margin);transform:rotate(6deg);font-size:25px}
+.basic-list{top:592px;left:var(--margin);transform:rotate(-5deg);font-size:32px}
+.basic-for{top:868px;left:var(--margin);max-width:136px;transform:rotate(-4deg);font-size:18px}
+.basic-run{top:528px;right:var(--margin);transform:rotate(7deg);font-size:30px}
+.basic-screen{top:586px;right:var(--margin);transform:rotate(-5deg);font-size:22px}
+.basic-color{top:792px;right:var(--margin);transform:rotate(4deg);font-size:21px}
+.basic-beep{top:868px;right:var(--margin);transform:rotate(10deg);font-size:30px}
 #quiz,#result{color:var(--ink);background:rgba(19,37,31,.97);padding:35px 28px;margin:25px auto 0;border:1px solid var(--line);border-radius:12px;box-shadow:0 8px 30px rgba(35,44,48,.15)}
 body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
-@media(max-width:1330px){.sticker-einstein{width:130px}.note-left{font-size:17px}.polaroid-msx{width:140px}.scribble-atom{width:98px}.scribble-parabola{width:100px}}
-@media(max-width:1110px){.sticker-einstein{width:90px;left:1%}.note-left,.polaroid-msx,.scribble-parabola,.scribble-atom,.scribble-equation{display:none}.note-right{display:none}main{max-width:940px}}
+@media(max-width:1110px){main{max-width:940px}}
 @media(max-width:750px){
   .notebook-decor{display:none}
   .site-header{padding:20px 14px 11px}
@@ -227,49 +230,59 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
 @media(max-width:410px){.brand-lines strong{font-size:32px}.brand-lines em{font-size:27px}.flag-strokes i{width:5px;height:18px}.site-footer{font-size:9px}}
 
 
-/* Approved nostalgic assets: Einstein dot-matrix print and MSX CRT Polaroid */
-.sticker-einstein{
-  top:44px;
-  left:max(8px,calc((100vw - 1675px)/2));
-  width:clamp(235px,19vw,330px);
-  padding-bottom:10px;
-  height:auto;
-  overflow:visible;
-  transform:rotate(-5deg);
-  z-index:1;
-  filter:drop-shadow(3px 5px 3px rgba(42,32,24,.16));
+/* Formulário contínuo Olivetti: furos de tração, picote e barras verdes */
+.tractor-sheet{
+  display:flex;align-items:stretch;
+  background:#e5f3dc;
+  border-top:1px dashed rgba(52,66,40,.6);
+  border-bottom:1px dashed rgba(52,66,40,.6);
+  box-shadow:2px 3px 0 rgba(48,42,28,.1);
 }
-.sticker-einstein img{
-  display:block;
-  width:100%;
-  height:auto;
-  object-fit:contain;
-  max-width:none;
-  clip-path:none;
-  filter:sepia(.12) contrast(1.07);
+.tractor-sprocket{
+  flex:0 0 18px;width:18px;
+  background-color:#e5f3dc;
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='18' height='16' viewBox='0 0 18 16'%3E%3Ccircle cx='9' cy='8' r='3.55' fill='%23cfc3a8'/%3E%3Ccircle cx='9' cy='8' r='2.65' fill='%23f3ead6'/%3E%3Ccircle cx='9' cy='8' r='2.65' fill='none' stroke='%23322922' stroke-width='.9'/%3E%3C/svg%3E"),
+    repeating-linear-gradient(to bottom,#f7fbf4 0 11px,#c5e2b4 11px 22px);
+  background-repeat:repeat-y,repeat;
+  background-size:18px 16px,auto;
+  background-position:center top,0 0;
 }
-.sticker-einstein .tape-top{width:71px;height:21px;top:-7px;left:6%;z-index:2;transform:rotate(-25deg)}
-.sticker-einstein .tape-bottom{width:68px;height:20px;bottom:-4px;left:12%;z-index:2;transform:rotate(15deg)}
-.polaroid-msx{
-  top:414px;
-  right:max(5px,calc((100vw - 1630px)/2));
-  width:clamp(201.25px,16.1vw,289.8px);
-  padding:0;
-  border:0;
-  background:none;
-  box-shadow:none;
-  transform:rotate(5deg);
+.tractor-page{
+  flex:1;min-width:0;
+  padding:8px 7px 4px;
+  border-left:1px dashed rgba(52,66,40,.62);
+  border-right:1px dashed rgba(52,66,40,.62);
+  background:repeating-linear-gradient(to bottom,#f7fbf4 0 11px,#c5e2b4 11px 22px);
 }
+.tractor-page img{
+  display:block;width:100%;height:auto;
+  aspect-ratio:370/252;
+  object-fit:contain;object-position:center center;
+  image-rendering:crisp-edges;image-rendering:pixelated;
+  background:transparent;
+}
+.tractor-caption{
+  display:block;margin:6px 0 1px;text-align:center;
+  font:700 9px/1 "Courier New",ui-monospace,monospace;
+  letter-spacing:.2em;color:#161616;
+}
+.sticker-einstein .tape-top{width:72px;height:20px;top:-9px;left:16%;transform:rotate(-18deg)}
+.sticker-einstein .tape-bottom{width:68px;height:18px;bottom:10px;left:7%;transform:rotate(12deg)}
 .polaroid-msx img{
-  display:block;
-  width:100%;
-  height:auto;
+  display:block;width:100%;height:auto;
+  object-fit:contain;object-position:center top;
   filter:drop-shadow(3px 7px 5px rgba(43,34,26,.22));
 }
-@media (max-width:1499px) and (min-width:1271px){
-  .sticker-einstein{top:78px;left:2px;width:210px}
-  .polaroid-msx{right:2px;top:440px;width:197.8px}
+@media (min-width:1500px){
+  .sticker-einstein{width:336px}
+  .polaroid-msx{width:286px}
+  .paper-note{font-size:28px}
+  .scribble-parabola{width:210px}
+  .scribble-atom{width:180px}
+  .scribble-basic{font-size:26px;max-width:180px}
+  .basic-run,.basic-list,.basic-beep{font-size:36px}
 }
-@media (max-width:1270px){
-  .sticker-einstein,.polaroid-msx{display:none}
+@media (max-width:1250px){
+  .sticker-einstein,.polaroid-msx,.paper-note,.scribble,.scribble-equation,.scribble-basic{display:none}
 }
