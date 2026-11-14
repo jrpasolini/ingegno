@@ -181,7 +181,7 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .sticker-tape{position:absolute;display:block;width:61px;height:20px;border:1px solid rgba(142,121,98,.18);background:linear-gradient(115deg,rgba(255,255,251,.50),rgba(214,198,163,.47));box-shadow:1px 2px 2px rgba(34,27,24,.10);transform:rotate(-16deg);z-index:2}
 .tape-top{top:-8px;left:22%}.tape-bottom{bottom:18px;left:8%}
 .paper-note{position:absolute;font:italic 26px/1.28 "Comic Sans MS","Segoe Print","Bradley Hand",cursive;color:#2a4c94;pointer-events:none}
-.note-left{top:340px;left:calc(var(--margin) + 8px);display:flex;flex-direction:column;gap:3px;transform:rotate(-8deg)}
+.note-left{top:270px;left:calc(var(--margin) + 8px);display:flex;flex-direction:column;gap:3px;transform:rotate(-8deg)}
 .note-right{top:378px;right:var(--margin);border:2px solid #2c4a89;border-radius:53% 47% 45% 55%;padding:9px 12px;transform:rotate(8deg);text-align:center;font-size:21px;line-height:1.2}
 .note-arrow{position:absolute;top:96%;left:-14px;font-size:28px}
 .scribble{position:absolute;stroke:#365996;pointer-events:none}

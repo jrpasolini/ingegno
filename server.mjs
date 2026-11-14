@@ -87,7 +87,7 @@ async function handler(req,res){
     "/ingegno/app.js":["app.js","text/javascript"],"/ingegno/styles.css":["styles.css","text/css"],
     "/ingegno/bank.js":["bank.js","text/javascript"],
     "/ingegno/assets/einstein-matricial.webp":["assets/einstein-matricial.webp","image/webp"],
-    "/ingegno/assets/einstein-matricial-completo.png":["assets/einstein-matricial-completo.png","image/png"],
+    "/ingegno/assets/einstein-matricial-original.png":["assets/einstein-matricial-original.png","image/png"],
     "/ingegno/assets/gradiente-msx-polaroid.webp":["assets/gradiente-msx-polaroid.webp","image/webp"]};
   if(!files[path])return send(res,404,{error:"Não encontrado"});
   const [file,mime]=files[path],data=await readFile(new URL("./public/"+file,import.meta.url));

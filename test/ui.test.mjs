@@ -34,7 +34,7 @@ test("referências retrô são decorativas e CSS é responsivo",()=>{
 
 
 test("artes oficiais do caderno estão presentes e usam imagens otimizadas",async()=>{
-  for (const asset of ["einstein-matricial-completo.png","gradiente-msx-polaroid.webp"]){
+  for (const asset of ["einstein-matricial-original.png","gradiente-msx-polaroid.webp"]){
     assert.match(html,new RegExp("assets/"+asset.replace(".","\\.")));
     const bytes=await readFile(new URL("../public/assets/"+asset,import.meta.url));
     assert.ok(bytes.length>500,"Asset não pode estar vazio: "+asset);

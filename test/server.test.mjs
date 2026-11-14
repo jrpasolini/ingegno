@@ -19,7 +19,7 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const home=await fetch(origin+"/ingegno/");
     assert.equal(home.status,200);
     assert.match(await home.text(),/GENIO/);
-    const portrait=await fetch(origin+"/ingegno/assets/einstein-matricial-completo.png");
+    const portrait=await fetch(origin+"/ingegno/assets/einstein-matricial-original.png");
     assert.equal(portrait.status,200);
     assert.equal(portrait.headers.get("content-type"),"image/png");
     const portraitBytes=Buffer.from(await portrait.arrayBuffer());
