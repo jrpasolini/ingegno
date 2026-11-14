@@ -10,6 +10,10 @@
   <script type="module" src="./app.js"></script>
 </head>
 <body>
+  <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
+    <symbol id="icon-books" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><path d="m8 48 37-13 28 12-37 15zM8 48v12l28 12 37-15V47M36 62v10M12 32 48 20l24 10-36 13zM12 32v10l24 11 36-13V30M36 43v10M10 16 46 5l25 10-36 12zM10 16v10l25 12 36-13V15M35 27v11"/><path d="m43 29 22-7M43 46l23-8M43 65l23-8" stroke-width="1"/></g></symbol>
+    <symbol id="icon-trophy" viewBox="0 0 80 80"><g fill="none" stroke="currentColor" stroke-width="2.5" stroke-linejoin="round"><path d="M26 10h28v15c0 18-7 24-14 24S26 43 26 25zM26 16H15v9c0 11 7 16 15 16M54 16h11v9c0 11-7 16-15 16M40 49v13m-9 0h18l5 9H26zM20 72C5 56 4 39 12 28m48 44c15-16 16-33 8-44"/><path d="m14 55-9-3m11 10-9-1m8-15-10-5m61 14 9-3m-11 10 9-1m-8-15 10-5M33 15v12c0 7 2 11 5 13" stroke-width="1.5"/></g></symbol>
+  </defs></svg>
   <div class="notebook-decor" aria-hidden="true">
     <div class="sticker-einstein">
       <div class="tractor-sheet">
@@ -53,13 +57,13 @@
       <p class="hero-intro">Escolha uma disciplina ou aceite um desafio surpresa. O Genio acompanha cada resposta e explica o que você pode melhorar.</p>
       <div class="mode-grid" role="group" aria-label="Modalidade do simulado">
         <button type="button" class="mode-card selected" data-mode="impara" aria-pressed="true">
-          <span class="mode-topline"><span class="mode-illustration" aria-hidden="true">▤</span><span class="mode-number">01 / PRATIQUE</span></span>
+          <span class="mode-topline"><svg class="mode-art" aria-hidden="true"><use href="#icon-books"/></svg><span class="mode-number">01 / PRATIQUE</span></span>
           <strong>IMPARA</strong><span class="mode-italic">Eu escolho meu desafio.</span>
           <span class="mode-desc">Selecione uma disciplina específica para praticar, revisar e evoluir no seu ritmo.</span>
           <span class="mode-foot">TREINO DIRECIONADO <span aria-hidden="true">↗</span></span>
         </button>
         <button type="button" class="mode-card" data-mode="sapienza" aria-pressed="false">
-          <span class="mode-topline"><span class="mode-illustration" aria-hidden="true">♜</span><span class="mode-number">02 / DESAFIE-SE</span></span>
+          <span class="mode-topline"><svg class="mode-art" aria-hidden="true"><use href="#icon-trophy"/></svg><span class="mode-number">02 / DESAFIE-SE</span></span>
           <strong>SAPIENZA</strong><span class="mode-italic">O desafio escolhe você.</span>
           <span class="mode-desc">Genio mistura as disciplinas do semestre de maneira imprevisível. Mostre o que sabe.</span>
           <span class="mode-foot">DESAFIO COMPLETO <span aria-hidden="true">↗</span></span>
@@ -104,14 +108,16 @@
       <p id="quiz-notice" class="notice" aria-live="polite"></p>
     </section>
     <section id="result" class="result page" aria-label="Resultado do simulado">
-      <div class="result-eyebrow">GENIO / IL VERDETTO</div>
-      <h2>Ogni errore<br>insegna<span class="point">.</span></h2>
-      <p class="result-sub">Cada erro ensina alguma coisa. Veja sua evolução.</p>
-      <div class="score-block"><div class="score-big" id="score">0<span>/0</span></div><div class="score-meta">
+      <h2>Il Verdetto</h2>
+      <p class="result-sub">Resultado e gabarito corrigido</p>
+      <div class="score-block"><svg class="score-art" aria-hidden="true"><use href="#icon-trophy"/></svg><div class="score-big" id="score">0<span>/0</span></div><div class="score-meta">
         <span id="percent">0% DE ACERTOS</span><span id="duration">00:00 DE ESTUDO</span><span id="score-caption">Um passo de cada vez.</span></div></div>
-      <h3 class="review-title">Revisão comentada <span id="review-count"></span></h3>
+      <div class="performance-topics"><p><span class="teacher-check">✓</span> <strong>Ponto forte nesta prova:</strong> <span id="strength-topic"></span></p><p><span class="teacher-cross">△</span> <strong>Precisa revisar:</strong> <span id="priority-topic"></span></p></div>
+      <aside class="genio-note" aria-labelledby="genio-title"><div class="genio-signature"><img src="./assets/einstein-matricial-original.png" width="1216" height="832" alt=""/><h3 id="genio-title">Genio diz:</h3></div><div><p id="genio-reading"></p><ol id="study-plan"></ol><small id="tutor-source"></small></div></aside>
+      <div class="review-heading"><h3 class="review-title">Gabarito corrigido <span id="review-count"></span></h3><button type="button" id="review-errors" class="paper-button" aria-pressed="false">Revisar meus erros</button></div>
+      <p id="review-empty" hidden>Nenhum erro nesta tentativa. Bravo! Experimente um novo desafio.</p>
       <div id="review" class="review-list"></div>
-      <button id="again-btn" class="primary-btn">NOVO DESAFIO <span aria-hidden="true">↗</span></button>
+      <div class="result-actions"><button id="retry-btn" class="paper-button retry-button">↻ Tentar novamente</button><button id="again-btn" class="primary-btn">NOVO DESAFIO <span aria-hidden="true">↗</span></button></div>
     </section>
   </main>
   <footer class="site-footer"><span>GENIO ACADEMY <span class="footer-muted">POWERED BY INGEGNO</span></span><span class="footer-note">IMPARA · SBAGLIA · MIGLIORA</span><a href="https://github.com/jrpasolini/ingegno" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></footer>

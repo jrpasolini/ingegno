@@ -1,4 +1,5 @@
 import {SUBJECTS,createDemoQuestions} from "./bank.js";
+import {analyzePerformance} from "./performance.js";
 const $=id=>document.getElementById(id);
 const state={mode:"impara",count:10,time:"none",questions:[],answers:[],current:0,sessionId:null,demoQuestions:[],
   started:0,ticker:null,deadline:0,questionDeadline:0,finishing:false};
@@ -95,6 +96,7 @@ function demoGrade(){
 }
 async function finish(){
   if(state.finishing)return;state.finishing=true;stopTimer();
+  const elapsedSeconds=(Date.now()-state.started)/1000;
   setNotice("quiz-notice","Genio está preparando seu veredito…");$("next-btn").disabled=true;
   let grade;
   try{
@@ -110,16 +112,24 @@ async function finish(){
   }
   $("score").innerHTML=grade.correct+"<span>/"+grade.total+"</span>";
   $("percent").textContent=grade.percentage+"% DE ACERTOS";
-  $("duration").textContent=displayClock((Date.now()-state.started)/1000)+" DE ESTUDO";
+  $("duration").textContent=displayClock(elapsedSeconds)+" DE ESTUDO";
   $("score-caption").textContent=grade.percentage>=80?"Bravo! Continue aprofundando.":grade.percentage>=50?"Um bom começo. Revise os conceitos.":"Cada erro é uma nova oportunidade de aprender.";
   $("review-count").textContent="· "+(grade.total-grade.correct)+" para revisar";
+  const analysis=analyzePerformance(grade.results),tutor=grade.tutor||{...analysis,source:"local"};
+  $("strength-topic").textContent=analysis.strengths.map(t=>t.label+` (${t.correct}/${t.total})`).join("; ")||"Continue praticando os tópicos avaliados.";
+  $("priority-topic").textContent=analysis.priorities.map(t=>t.label+` (${t.total-t.correct} para revisar)`).join("; ")||"Nenhum erro nos tópicos avaliados.";
+  $("genio-reading").textContent=tutor.summary;
+  $("study-plan").innerHTML=tutor.steps.map(s=>'<li>'+escape(s)+'</li>').join("");
+  $("tutor-source").textContent=tutor.source==="ai"?"Parecer por IA · "+tutor.model+" · baseado nesta tentativa; pode conter imprecisões.":"Leitura dos seus acertos e erros nesta tentativa · sem parecer gerado por IA.";
+  $("review-errors").setAttribute("aria-pressed","false");$("review-empty").hidden=true;
+  $("review-errors").textContent="Revisar meus erros";
   $("review").innerHTML=grade.results.map((q,i)=>{
     const chosen=q.chosenIndex===null?"Sem resposta":q.options[q.chosenIndex];
-    return '<article class="review-card"><div class="review-meta"><span>'+escape(q.subject)+' · '+escape(q.topic)+'</span><span>'+
+    return '<article class="review-card '+(q.correct?'is-correct':'is-incorrect')+'"><div class="review-meta"><span>'+escape(q.subject)+' · '+escape(q.topic)+'</span><span>'+
       (q.correct?"✓ ACERTOU":"✗ REVISAR")+'</span></div><h4>'+String(i+1).padStart(2,"0")+'. '+escape(q.prompt)+'</h4>'+
       '<p class="'+(q.correct?"right-answer":"wrong-answer")+'">Sua resposta: '+escape(chosen)+'</p>'+
       '<p class="right-answer">Resposta correta: '+escape(q.options[q.correctIndex])+'</p>'+
-      '<p class="explain">'+escape(q.explanation)+'</p></article>';
+      '<p class="explain"><strong>Genio explica:</strong> '+escape(q.explanation)+'</p></article>';
   }).join("");
   visible("result");state.finishing=false;
 }
@@ -135,3 +145,10 @@ $("quit-btn").addEventListener("click",()=>{
   }
 });
 $("again-btn").addEventListener("click",()=>{stopTimer();visible("welcome");setNotice("start-notice","");});
+$("retry-btn").addEventListener("click",async()=>{const btn=$("retry-btn");btn.disabled=true;visible("welcome");try{await start();}finally{btn.disabled=false;}});
+$("review-errors").addEventListener("click",()=>{
+  const btn=$("review-errors"),filter=btn.getAttribute("aria-pressed")!=="true";
+  btn.setAttribute("aria-pressed",String(filter));btn.textContent=filter?"Ver gabarito completo":"Revisar meus erros";
+  document.querySelectorAll("#review .review-card").forEach(card=>{card.hidden=filter&&card.classList.contains("is-correct");});
+  $("review-empty").hidden=!(filter&&!document.querySelector("#review .is-incorrect"));
+});

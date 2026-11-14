@@ -37,5 +37,10 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const result=await graded.json();
     assert.equal(result.correct,0);assert.equal(result.total,5);
     assert.ok(result.results.every(q=>Number.isInteger(q.correctIndex)&&q.explanation));
+    assert.equal(result.tutor.source,"local");
+    assert.match(result.tutor.summary,/0 de 5/);
+    assert.ok(result.tutor.steps.length>0);
+    const performanceModule=await fetch(origin+"/ingegno/performance.js");
+    assert.equal(performanceModule.status,200);
   }finally{child.kill();}
 });
