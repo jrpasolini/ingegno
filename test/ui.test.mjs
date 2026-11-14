@@ -31,3 +31,14 @@ test("referências retrô são decorativas e CSS é responsivo",()=>{
   assert.match(js,/fetch\("\.\/api\/session"/);
   assert.match(js,/fetch\("\.\/api\/grade"/);
 });
+
+
+test("artes oficiais do caderno estão presentes e usam imagens otimizadas",async()=>{
+  for (const asset of ["einstein-matricial.webp","gradiente-msx-polaroid.webp"]){
+    assert.match(html,new RegExp("assets/"+asset.replace(".","\\.")));
+    const bytes=await readFile(new URL("../public/assets/"+asset,import.meta.url));
+    assert.ok(bytes.length>500,"Asset não pode estar vazio: "+asset);
+    assert.equal(bytes.subarray(0,4).toString("ascii"),"RIFF");
+    assert.equal(bytes.subarray(8,12).toString("ascii"),"WEBP");
+  }
+});
