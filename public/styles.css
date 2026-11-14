@@ -351,6 +351,16 @@ body:has(#result.active) .notebook-decor{opacity:1}
 }
 
 /* Hand-corrected exam: drawn strokes, handwriting and circled alternatives. */
+/* Size drawings to the real free margin, rather than the content width. */
+.notebook-decor{--drawing-edge:max(16px,calc((100vw - 1010px)/2 - 244px));--drawing-room:calc((100vw - 1010px)/2 - 36px)}
+.notebook-decor .scribble-parabola{right:var(--drawing-edge);width:min(210px,var(--drawing-room))}
+.notebook-decor .scribble-atom{left:var(--drawing-edge);width:min(180px,var(--drawing-room))}
+.install-strip{display:flex;align-items:center;gap:16px;padding:18px 20px;margin-top:26px;border:1px solid #193a7540;border-radius:12px;background:#fffdf5;color:var(--paper-ink)}
+.install-strip img{border-radius:10px;flex-shrink:0}.install-strip strong{font:bold 16px Georgia,serif}
+.install-strip p{font:13px/1.5 Georgia,serif;color:#526078;margin:5px 0 0}.install-strip button{margin-left:auto;white-space:nowrap}
+.install-dialog{color:var(--paper-ink);background:#fffdf5;border:1.5px solid var(--paper-border);border-radius:14px;width:min(480px,calc(100% - 32px));padding:28px;box-shadow:0 12px 50px #193a7533}
+.install-dialog::backdrop{background:#202f4b66}.install-dialog h2{font:bold 26px Georgia,serif}.install-dialog p{font:16px/1.7 Georgia,serif}.install-dialog .paper-button{display:block;margin-left:auto}
+@media(max-width:750px){.install-strip{flex-wrap:wrap;gap:12px;padding:16px}.install-strip div{flex:1}.install-strip button{width:100%;margin:0;white-space:normal}.install-dialog{padding:22px}}
 /* Printed exam sheet: opaque stock, typewriter text and blue ballpoint selection. */
 #quiz{
   color:var(--paper-ink);border:1px solid var(--paper-border);border-radius:13px;

@@ -1,4 +1,4 @@
-import {SUBJECTS,createDemoQuestions} from "./bank.js";
+import {SUBJECTS,createDemoQuestions,hasSemesterCoverage} from "./bank.js";
 import {analyzePerformance,teacherVerdict,examOutcome} from "./performance.js";
 const $=id=>document.getElementById(id);
 const state={mode:"impara",count:10,time:"none",questions:[],answers:[],current:0,sessionId:null,demoQuestions:[],
@@ -53,33 +53,38 @@ function tick(){
 async function start(){
   if(state.finishing)return;
   const btn=$("start-btn");btn.disabled=true;
+  const configuration=[...document.querySelectorAll('.mode-card,[data-count],[data-time],#subject')];
+  const unlock=()=>{btn.disabled=false;configuration.forEach(control=>{control.disabled=false;});};
+  configuration.forEach(control=>{control.disabled=true;});
   setNotice("start-notice","Genio está preparando seu desafio…");
   const subjectId=$("subject").value;
+  const requestedMode=state.mode;
   let session;
   try{
     const r=await fetch("./api/session",{method:"POST",headers:{"Content-Type":"application/json"},
-      body:JSON.stringify({mode:state.mode,subjectId,count:state.count})});
+      body:JSON.stringify({mode:requestedMode,...(requestedMode==="impara"?{subjectId}:{}),count:state.count})});
     if(!r.ok){
       if(r.status!==404)throw Error((await r.json().catch(()=>({}))).error||"Falha na API.");
       throw Error("API_OFFLINE");
     }
     session=await r.json();if(!Array.isArray(session.questions)||!session.questions.length)throw Error("Simulado vazio");
+    if(requestedMode==="sapienza"&&!hasSemesterCoverage(session.questions,state.count))throw Error("SEMESTER_INCOMPLETE");
   }catch(e){
-    if(e.message!=="API_OFFLINE"&&e.message!=="Failed to fetch"&&e.name!=="TypeError"){
-      setNotice("start-notice",e.message);btn.disabled=false;return;
+    if(!["API_OFFLINE","SEMESTER_INCOMPLETE","Failed to fetch"].includes(e.message)&&e.name!=="TypeError"){
+      setNotice("start-notice",e.message);unlock();return;
     }
     const qs=createDemoQuestions(state.mode,subjectId,state.count);
     state.demoQuestions=qs;
     session={sessionId:null,engine:"demo",questions:qs.map(q=>({id:q.id,subjectId:q.subjectId,
       subject:SUBJECTS.find(s=>s.id===q.subjectId)?.name||"",topic:q.topic,prompt:q.prompt,options:q.options})),
-      notice:"Espelho estático do GitHub Pages: questões demonstrativas locais, sem IA. "+(qs.length<state.count?"Disponíveis: "+qs.length+".":"")};
+      notice:(e.message==="SEMESTER_INCOMPLETE"?"A prova recebida não cobria todas as disciplinas. Ativamos uma rodada demonstrativa equilibrada, sem IA. ":"Modo demonstração local: questões sem IA. ")+(qs.length<state.count?"Disponíveis: "+qs.length+".":"")};
   }
   state.sessionId=session.sessionId;state.questions=session.questions;
   state.answers=state.questions.map(()=>null);state.current=0;state.finishing=false;
   state.started=Date.now();state.deadline=Date.now()+state.questions.length*90000;
   state.questionDeadline=Date.now()+75000;
   setNotice("quiz-notice",session.notice||"");
-  btn.disabled=false;stopTimer();visible("quiz");renderQuestion();tick();state.ticker=setInterval(tick,500);
+  unlock();stopTimer();visible("quiz");renderQuestion();tick();state.ticker=setInterval(tick,500);
 }
 function renderQuestion(){
   const q=state.questions[state.current],n=state.current+1;

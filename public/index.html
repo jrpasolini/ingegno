@@ -4,10 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f6f0df">
+  <link rel="manifest" href="./manifest.webmanifest">
+  <link rel="icon" type="image/png" sizes="192x192" href="./assets/icon-192.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="./assets/apple-touch-icon.png">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="Genio">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="description" content="Genio Academy: simulados inteligentes para aprender, errar e melhorar.">
   <title>GENIO Academy · Impara. Sbaglia. Migliora.</title>
   <link rel="stylesheet" href="./styles.css">
   <script type="module" src="./app.js"></script>
+  <script type="module" src="./pwa.js"></script>
 </head>
 <body>
   <svg class="icon-library" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"><defs>
@@ -97,6 +104,7 @@
         <p id="start-notice" class="notice" aria-live="polite"></p>
       </div>
       <div class="feature-row"><span>✓ QUATRO ALTERNATIVAS</span><span>✎ CORREÇÃO EXPLICADA</span><span>✧ CINCO DISCIPLINAS</span></div>
+      <div id="install-strip" class="install-strip" hidden><img src="./assets/icon-192.png" width="48" height="48" alt=""><div><strong>O Genio na sua tela inicial</strong><p id="install-description">Abra seus desafios com um toque.</p></div><button type="button" id="install-app" class="paper-button">Instalar aplicativo</button></div>
     </section>
     <section id="quiz" class="quiz page" aria-label="Simulado">
       <div class="quiz-top"><button id="quit-btn" class="ghost-btn">← Sair do desafio</button><span id="timer" class="timer" aria-live="off"></span></div>
@@ -124,4 +132,5 @@
     </section>
   </main>
   <footer class="site-footer"><span>GENIO ACADEMY <span class="footer-muted">POWERED BY INGEGNO</span></span><span class="footer-note">IMPARA · SBAGLIA · MIGLIORA</span><a href="https://github.com/jrpasolini/ingegno" target="_blank" rel="noopener noreferrer">GITHUB ↗</a></footer>
+  <dialog id="install-help" class="install-dialog" aria-labelledby="install-title"><h2 id="install-title">Leve o Genio com você</h2><p id="install-instructions"></p><p>Sem internet, você pode praticar com as questões demonstrativas. A IA precisa de conexão.</p><button type="button" id="close-install-help" class="paper-button">Entendi</button></dialog>
 </body></html>

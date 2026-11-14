@@ -1,7 +1,7 @@
 import http from "node:http";
 import {readFile} from "node:fs/promises";
 import {randomUUID} from "node:crypto";
-import {SUBJECTS,createDemoQuestions} from "./public/bank.js";
+import {SUBJECTS,createDemoQuestions,hasSemesterCoverage,interleaveSemester} from "./public/bank.js";
 import {analyzePerformance} from "./public/performance.js";
 const BASE="/ingegno", MODEL=process.env.NVIDIA_MODEL||"nvidia/nemotron-3.5-lightning-30b-a3b", sessions=new Map(),limits=new Map();
 const send=(res,status,data)=>{res.writeHead(status,{"content-type":"application/json; charset=utf-8","cache-control":"no-store"});res.end(JSON.stringify(data));};
@@ -21,14 +21,14 @@ function validate(raw,mode,subjectId,count){
     return {id:"q"+i,subjectId:q.subjectId,topic:String(q.topic||"Conceitos").slice(0,90),
       prompt:q.prompt.slice(0,700),options:q.options.map(x=>x.slice(0,250)),correctIndex:q.correctIndex,explanation:q.explanation.slice(0,1200)};
   });
-  if(mode==="sapienza"&&count>=5&&new Set(out.map(q=>q.subjectId)).size<5)throw Error("Distribuição incompleta");
-  return out;
+  if(mode==="sapienza"&&!hasSemesterCoverage(out,count))throw Error("Distribuição incompleta");
+  return mode==="sapienza"?interleaveSemester(out):out;
 }
 async function generate(mode,subjectId,count){
   const selected=mode==="sapienza"?SUBJECTS:SUBJECTS.filter(s=>s.id===subjectId);
   const syllabus=selected.map(s=>s.id+": "+s.name+" ("+s.topics.join(", ")+")").join("; ");
   const task="Produza EXATAMENTE "+count+" questões universitárias ORIGINAIS em português brasileiro, quatro opções distintas e UMA correta. Programa: "+syllabus+
-    ". Não alegue conhecer PDFs completos. Modo Sapienza: distribua por todas as CINCO disciplinas, com pelo menos uma questão de cada. "+
+    ". Não alegue conhecer PDFs completos. "+(mode==="sapienza"?"Distribua EXATAMENTE "+(count/5)+" questões de CADA UMA das CINCO disciplinas. ":"Use somente a disciplina selecionada. ")+
     "Questões objetivas, sem ambiguidades, explicações didáticas, respostas corretas em posições variadas. "+
     "Responda somente ARRAY JSON com objetos {subjectId,topic,prompt,options:[quatro strings],correctIndex:inteiro 0..3,explanation:string}.";
   const c=new AbortController(), t=setTimeout(()=>c.abort(),75000);
@@ -107,12 +107,19 @@ async function handler(req,res){
     "/ingegno/app.js":["app.js","text/javascript"],"/ingegno/styles.css":["styles.css","text/css"],
     "/ingegno/bank.js":["bank.js","text/javascript"],
     "/ingegno/performance.js":["performance.js","text/javascript"],
+    "/ingegno/pwa.js":["pwa.js","text/javascript"],
+    "/ingegno/sw.js":["sw.js","text/javascript"],
+    "/ingegno/manifest.webmanifest":["manifest.webmanifest","application/manifest+json"],
+    "/ingegno/assets/icon-192.png":["assets/icon-192.png","image/png"],
+    "/ingegno/assets/icon-512.png":["assets/icon-512.png","image/png"],
+    "/ingegno/assets/icon-maskable-512.png":["assets/icon-maskable-512.png","image/png"],
+    "/ingegno/assets/apple-touch-icon.png":["assets/apple-touch-icon.png","image/png"],
     "/ingegno/assets/einstein-matricial.webp":["assets/einstein-matricial.webp","image/webp"],
     "/ingegno/assets/einstein-matricial-original.png":["assets/einstein-matricial-original.png","image/png"],
     "/ingegno/assets/gradiente-msx-polaroid.webp":["assets/gradiente-msx-polaroid.webp","image/webp"]};
   if(!files[path])return send(res,404,{error:"Não encontrado"});
   const [file,mime]=files[path],data=await readFile(new URL("./public/"+file,import.meta.url));
-  res.writeHead(200,{"content-type":mime.startsWith("image/")?mime:mime+"; charset=utf-8","x-content-type-options":"nosniff",
+  res.writeHead(200,{"content-type":mime.startsWith("image/")?mime:mime+"; charset=utf-8","x-content-type-options":"nosniff","cache-control":"no-cache",
     "content-security-policy":"default-src 'self'; style-src 'self' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; script-src 'self'; connect-src 'self'; img-src 'self' data:; base-uri 'self'"});
   res.end(req.method==="HEAD"?undefined:data);
 }

@@ -1,0 +1,17 @@
+{
+  "id": "/ingegno/",
+  "name": "Genio Academy",
+  "short_name": "Genio",
+  "description": "Impara. Sbaglia. Migliora. Simulados e revisão no seu ritmo.",
+  "lang": "pt-BR",
+  "start_url": "/ingegno/",
+  "scope": "/ingegno/",
+  "display": "standalone",
+  "background_color": "#f7f0e2",
+  "theme_color": "#193a75",
+  "icons": [
+    {"src":"./assets/icon-192.png","sizes":"192x192","type":"image/png","purpose":"any"},
+    {"src":"./assets/icon-512.png","sizes":"512x512","type":"image/png","purpose":"any"},
+    {"src":"./assets/icon-maskable-512.png","sizes":"512x512","type":"image/png","purpose":"maskable"}
+  ]
+}

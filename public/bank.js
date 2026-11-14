@@ -51,10 +51,24 @@ export const BANK = {
   ]
 };
 
+export function shuffle(items){
+  const out=[...items];
+  for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]];}
+  return out;
+}
+export function hasSemesterCoverage(questions,count){
+  return questions.length===count&&SUBJECTS.every(s=>questions.filter(q=>q.subjectId===s.id).length===count/SUBJECTS.length);
+}
+export function interleaveSemester(questions){
+  const pools=shuffle(SUBJECTS).map(s=>shuffle(questions.filter(q=>q.subjectId===s.id)));
+  const out=[];
+  while(pools.some(p=>p.length))for(const pool of pools)if(pool.length)out.push(pool.pop());
+  return out;
+}
 export function createDemoQuestions(mode, subjectId, count) {
   const ids = mode === "sapienza" ? SUBJECTS.map(s => s.id) : [subjectId];
   if (ids.some(id => !BANK[id])) throw new Error("Disciplina inválida");
-  const pools = ids.map(id => BANK[id].map((row, i) => ({ id: id + "-" + i, subjectId: id, row })).sort(() => Math.random() - 0.5));
+  const pools = shuffle(ids).map(id => shuffle(BANK[id].map((row, i) => ({ id: id + "-" + i, subjectId: id, row }))));
   const picks = [];
   while (picks.length < count && pools.some(p => p.length)) {
     for (const pool of pools) { if (picks.length < count && pool.length) picks.push(pool.pop()); }

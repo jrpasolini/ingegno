@@ -42,5 +42,23 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     assert.ok(result.tutor.steps.length>0);
     const performanceModule=await fetch(origin+"/ingegno/performance.js");
     assert.equal(performanceModule.status,200);
+    const manifestResponse=await fetch(origin+'/ingegno/manifest.webmanifest');
+    assert.equal(manifestResponse.status,200);
+    assert.match(manifestResponse.headers.get('content-type'),/application\/manifest\+json/);
+    const manifest=await manifestResponse.json();
+    assert.equal(manifest.scope,'/ingegno/');assert.equal(manifest.start_url,'/ingegno/');
+    for(const icon of [...manifest.icons,{src:'./assets/apple-touch-icon.png'}]){
+      const response=await fetch(new URL(icon.src,origin+'/ingegno/manifest.webmanifest'));
+      assert.equal(response.status,200);assert.equal(response.headers.get('content-type'),'image/png');
+      const bytes=Buffer.from(await response.arrayBuffer());
+      assert.equal(bytes.subarray(0,8).toString('hex'),'89504e470d0a1a0a');
+      if(icon.sizes)assert.equal(bytes.readUInt32BE(16)+'x'+bytes.readUInt32BE(20),icon.sizes);
+    }
+    const worker=await fetch(origin+'/ingegno/sw.js');assert.equal(worker.status,200);
+    assert.match(worker.headers.get('content-type'),/javascript/);
+    const pwa=await fetch(origin+'/ingegno/pwa.js');assert.equal(pwa.status,200);
+    const semester=await fetch(origin+'/ingegno/api/session',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'sapienza',subjectId:'agil',count:20})});
+    const semesterData=await semester.json();assert.equal(semesterData.questions.length,20);
+    for(const subjectId of ['agil','riscos','planejamento','criacao','interfaces'])assert.equal(semesterData.questions.filter(q=>q.subjectId===subjectId).length,4);
   }finally{child.kill();}
 });
