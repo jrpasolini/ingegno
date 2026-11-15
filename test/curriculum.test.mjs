@@ -22,7 +22,7 @@ test("Impara gives detailed guidance for one subject, not for the entire semeste
   const context=buildStudyContext("impara","interfaces",10);
   assert.match(context,/Web 1\.0 e Web 2\.0/);
   assert.match(context,/Web 3\.0/);
-  assert.match(context,/Web semântica/);
+  assert.match(context,/web semântica/i);
   assert.match(context,/responsiv/);
   assert.doesNotMatch(context,/DISCIPLINA agil/);
   assert.doesNotMatch(context,/DISCIPLINA riscos/);
