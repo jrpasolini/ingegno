@@ -1,11 +1,11 @@
 // Questões autorais de demonstração inspiradas nos tópicos dos cinco materiais fornecidos.
 // Os PDFs originais não são redistribuídos.
 export const SUBJECTS = [
-  { id: "agil", name: "Projeto Ágil", icon: "⚡", topics: ["Manifesto Ágil", "Extreme Programming", "Scrum"] },
-  { id: "riscos", name: "Análise de Riscos e Qualidade", icon: "🛡️", topics: ["Riscos", "Probabilidade e impacto", "Qualidade"] },
-  { id: "planejamento", name: "Planejamento de um Website", icon: "🧭", topics: ["Briefing", "Público-alvo", "Objetivos"] },
-  { id: "criacao", name: "Criação de um Website", icon: "🎨", topics: ["Layout", "Design visual", "SEO"] },
-  { id: "interfaces", name: "Evolução das Interfaces", icon: "🖥️", topics: ["IHC", "História da Web", "Acessibilidade"] }
+  { id: "agil", name: "Projeto Ágil", icon: "⚡", topics: ["Manifesto Ágil", "Valores e princípios", "Extreme Programming (XP)", "Práticas de XP", "Scrum", "Empirismo e eventos Scrum"] },
+  { id: "riscos", name: "Análise de Riscos e Qualidade", icon: "🛡️", topics: ["Identificação de riscos", "Probabilidade e impacto", "Respostas aos riscos", "Contingência", "Ferramentas da qualidade", "Qualidade em projetos"] },
+  { id: "planejamento", name: "Planejamento de um Website", icon: "🧭", topics: ["Briefing", "Público-alvo e concorrência", "Objetivos SMART", "Requisitos funcionais", "Requisitos não funcionais", "Elicitação de requisitos"] },
+  { id: "criacao", name: "Criação de um Website", icon: "🎨", topics: ["Layout e hierarquia visual", "Princípios de design", "Cores e paleta", "Tipografia digital", "Imagens e vídeos", "SEO"] },
+  { id: "interfaces", name: "Evolução das Interfaces", icon: "🖥️", topics: ["IHC e interfaces", "Usabilidade e acessibilidade", "Web 1.0 e 2.0", "Web 3.0 e 4.0", "Web semântica", "Evolução do design responsivo"] }
 ];
 // [enunciado, certa, errada1, errada2, errada3, explicação, tópico]
 export const BANK = {
