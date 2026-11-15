@@ -3,6 +3,7 @@ import {readFile} from "node:fs/promises";
 import {randomUUID} from "node:crypto";
 import {SUBJECTS,createDemoQuestions,hasSemesterCoverage,interleaveSemester} from "./public/bank.js";
 import {analyzePerformance} from "./public/performance.js";
+import {buildStudyContext} from "./curriculum.mjs";
 const BASE="/ingegno", MODEL=process.env.NVIDIA_MODEL||"nvidia/nemotron-3.5-lightning-30b-a3b", sessions=new Map(),limits=new Map();
 const send=(res,status,data)=>{res.writeHead(status,{"content-type":"application/json; charset=utf-8","cache-control":"no-store"});res.end(JSON.stringify(data));};
 const publicQ=q=>({id:q.id,subjectId:q.subjectId,subject:SUBJECTS.find(s=>s.id===q.subjectId)?.name||"",topic:q.topic,prompt:q.prompt,options:q.options});
@@ -25,12 +26,16 @@ function validate(raw,mode,subjectId,count){
   return mode==="sapienza"?interleaveSemester(out):out;
 }
 async function generate(mode,subjectId,count){
-  const selected=mode==="sapienza"?SUBJECTS:SUBJECTS.filter(s=>s.id===subjectId);
-  const syllabus=selected.map(s=>s.id+": "+s.name+" ("+s.topics.join(", ")+")").join("; ");
-  const task="Produza EXATAMENTE "+count+" questões universitárias ORIGINAIS em português brasileiro, quatro opções distintas e UMA correta. Programa: "+syllabus+
-    ". Não alegue conhecer PDFs completos. "+(mode==="sapienza"?"Distribua EXATAMENTE "+(count/5)+" questões de CADA UMA das CINCO disciplinas. ":"Use somente a disciplina selecionada. ")+
-    "Questões objetivas, sem ambiguidades, explicações didáticas, respostas corretas em posições variadas. "+
-    "Responda somente ARRAY JSON com objetos {subjectId,topic,prompt,options:[quatro strings],correctIndex:inteiro 0..3,explanation:string}.";
+  const context=buildStudyContext(mode,subjectId,count);
+  const task="Produza EXATAMENTE "+count+" questões universitárias ORIGINAIS em português brasileiro, quatro opções distintas e UMA correta por questão. "+
+    "Use APENAS as notas curriculares abaixo como base factual. Elas são sínteses dos módulos didáticos, não o texto integral dos PDFs. "+
+    "Não copie enunciados de provas, não invente datas ou fatos que não estejam nas notas, nem afirme ter lido os PDFs. "+
+    "Cubra os diferentes módulos da disciplina de forma equilibrada, com questões de compreensão e aplicação. "+
+    (mode==="sapienza"?"Distribua EXATAMENTE "+(count/5)+" questões de CADA UMA das CINCO disciplinas, sem repetir enunciados. ":"Use somente a disciplina selecionada. ")+
+    "As opções incorretas devem ser plausíveis, porém inequívocas. Para cada questão, o campo topic deve corresponder a um dos módulos descritos e explanation deve justificar a correta com base nas notas, sem citar páginas não verificadas. "+
+    "Alterne a posição das respostas corretas. Evite alegações não sustentadas e classificações debatidas tratadas como fatos universais. "+
+    "Responda somente ARRAY JSON com objetos {subjectId,topic,prompt,options:[quatro strings],correctIndex:inteiro 0..3,explanation:string}. "+
+    "NOTAS CURRICULARES:\n"+context;
   const c=new AbortController(), t=setTimeout(()=>c.abort(),75000);
   try{
     const r=await fetch("https://integrate.api.nvidia.com/v1/chat/completions",{
