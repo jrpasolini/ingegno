@@ -19,6 +19,8 @@ test("o layout de caderno mantém as três telas e controles da API",()=>{
   assert.equal((html.match(/data-mode="sapienza"/g)||[]).length,1);
   for(const count of [5,10,15,20])assert.ok(html.includes('data-count="'+count+'"'));
   for(const time of ["none","total","question"])assert.ok(html.includes('data-time="'+time+'"'));
+  assert.match(html,/<option value="redes">Redes de Computadores<\/option>/);
+  assert.match(html,/SEIS DISCIPLINAS/);
 });
 
 test("referências retrô são decorativas e CSS é responsivo",()=>{
