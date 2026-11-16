@@ -1,3 +1,4 @@
+import {NETWORK_CURRICULUM} from "./network-curriculum.mjs";
 /**
  * Guia curricular sintético e autoral para os simulados do Ingegno.
  *
@@ -89,6 +90,7 @@ export const CURRICULUM = Object.freeze({
       }
     ]
   },
+  redes: NETWORK_CURRICULUM,
   interfaces: {
     title: "Evolução das Interfaces",
     source: "A evolução e importância da interface de um Website (00487)",
@@ -113,16 +115,20 @@ export const CURRICULUM = Object.freeze({
   }
 });
 
-export function buildStudyContext(mode,subjectId,count){
+export function buildStudyContext(mode,subjectId,count,allocation=null){
   const ids=mode==="sapienza"?Object.keys(CURRICULUM):[subjectId];
   if(!ids.every(id=>Object.hasOwn(CURRICULUM,id)))throw new Error("Disciplina inexistente");
-  const expectedPerSubject=mode==="sapienza"?count/ids.length:count;
-  return ids.map(id=>{
+  const quotas=mode==="sapienza"?(allocation??Object.fromEntries(ids.map((id,i)=>[
+    id,Math.floor(count/ids.length)+(i<count%ids.length?1:0)
+  ]))):{[subjectId]:count};
+  if(!ids.every(id=>Number.isInteger(quotas[id])&&quotas[id]>=0)||
+     ids.reduce((sum,id)=>sum+quotas[id],0)!==count)throw new Error("Distribuição curricular inválida");
+  return ids.filter(id=>quotas[id]>0).map(id=>{
     const item=CURRICULUM[id];
     const modules=item.modules.map((module,index)=>
       String(index+1)+". "+module.title+" (páginas "+module.pages+"): "+module.guidance
     ).join("\n");
-    return "DISCIPLINA "+id+" — "+item.title+"; "+expectedPerSubject+
+    return "DISCIPLINA "+id+" — "+item.title+"; "+quotas[id]+
       " questão(ões). Material de referência: "+item.source+".\n"+modules;
   }).join("\n\n");
 }

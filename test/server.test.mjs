@@ -59,6 +59,20 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const pwa=await fetch(origin+'/ingegno/pwa.js');assert.equal(pwa.status,200);
     const semester=await fetch(origin+'/ingegno/api/session',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'sapienza',subjectId:'agil',count:20})});
     const semesterData=await semester.json();assert.equal(semesterData.questions.length,20);
-    for(const subjectId of ['agil','riscos','planejamento','criacao','interfaces'])assert.equal(semesterData.questions.filter(q=>q.subjectId===subjectId).length,4);
+    const sixCounts=['agil','riscos','planejamento','criacao','interfaces','redes'].map(id=>semesterData.questions.filter(q=>q.subjectId===id).length);
+    assert.ok(sixCounts.every(n=>n>=3&&n<=4));
+    const listResponse=await fetch(origin+'/ingegno/api/subjects');
+    const list=await listResponse.json();
+    assert.equal(list.subjects.length,6);
+    assert.ok(list.subjects.some(s=>s.id==='redes'&&s.name==='Redes de Computadores'));
+    const networkSession=await fetch(origin+'/ingegno/api/session',{method:'POST',
+      headers:{'content-type':'application/json'},body:JSON.stringify({mode:'impara',subjectId:'redes',count:20})});
+    assert.equal(networkSession.status,200);
+    const networkData=await networkSession.json();
+    assert.equal(networkData.questions.length,20);
+    assert.ok(networkData.questions.every(q=>q.subjectId==='redes'&&!Object.hasOwn(q,'correctIndex')));
+    const networkModule=await fetch(origin+'/ingegno/networks.js');
+    assert.equal(networkModule.status,200);
+    assert.match(networkModule.headers.get('content-type'),/text\/javascript/);
   }finally{child.kill();}
 });

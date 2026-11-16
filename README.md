@@ -28,7 +28,7 @@ Para habilitar geração dinâmica, configure **NVIDIA_API_KEY** nos secrets do 
 
 ## Conteúdo acadêmico e geração por IA
 
-O arquivo `curriculum.mjs` contém **sínteses originais e curtas**, organizadas por capítulo e página, dos cinco materiais acadêmicos fornecidos. O PDF original **não é publicado**. O backend utiliza essas notas no prompt da NVIDIA Build para que o Nemotron produza questões alinhadas à ementa.
+O arquivo `curriculum.mjs` contém **sínteses originais e curtas**, organizadas por capítulo e página, dos seis materiais acadêmicos fornecidos. O PDF original **não é publicado**. O backend utiliza essas notas no prompt da NVIDIA Build para que o Nemotron produza questões alinhadas à ementa.
 
 | Disciplina | Material | Capítulos |
 | --- | --- | --- |
@@ -37,10 +37,11 @@ O arquivo `curriculum.mjs` contém **sínteses originais e curtas**, organizadas
 | Planejamento de um Website | Planejamento de um Website (00875) | Briefing, objetivos, levantamento e descrição de requisitos |
 | Criação de um Website | Criação de um Website (00610) | Layout, cores e tipografia, mídias e SEO |
 | Evolução das Interfaces | A evolução e importância da interface de um Website (00487) | IHC/usabilidade, Web 1.0/2.0, Web 3.0/4.0, evolução do design |
+| Redes de Computadores | Redes de computadores e a internet (Estácio 2025.1) | Redes de acesso e ISPs, atrasos e vazão, OSI/TCP-IP e história da internet |
 
-Os nove uploads recentes de `00487` têm exatamente o **mesmo conteúdo** (mesmo hash SHA-256), por isso representam um único material — não nove disciplinas. O índice contém cinco fontes diferentes no total.
+Os nove uploads recentes de `00487` têm exatamente o **mesmo conteúdo** (mesmo hash SHA-256), por isso representam um único material — não nove disciplinas. O índice contém seis fontes diferentes no total, incluindo o material de Redes de Computadores adicionado posteriormente.
 
-- **Impara** fornece ao modelo as notas de uma disciplina; **Sapienza** fornece as cinco e exige distribuição equilibrada (1 a 4 perguntas por disciplina, conforme o tamanho da prova).
+- **Impara** fornece ao modelo as notas de uma disciplina; **Sapienza** utiliza as seis disciplinas e distribui as perguntas com diferenças de no máximo uma questão por matéria. Com apenas cinco questões, seleciona aleatoriamente cinco das seis; com 10, 15 ou 20 questões, contempla todas as seis.
 - O banco `public/bank.js` continua sendo uma **demonstração offline** de questões autorais e poderá conter menos questões do que o tamanho solicitado em Impara. Para geração dinâmica com base nos capítulos, é necessário `NVIDIA_API_KEY`.
 - A verificação da saída da IA checa formato, unicidade das alternativas e cobertura de disciplinas, mas não substitui **revisão humana de precisão pedagógica**. Uma referência resumida não equivale ao documento integral.
 

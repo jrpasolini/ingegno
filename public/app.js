@@ -24,10 +24,17 @@ document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener
   document.querySelectorAll("[data-mode]").forEach(b=>{const active=b===button;b.classList.toggle("selected",active);b.setAttribute("aria-pressed",String(active));});
   const sap=state.mode==="sapienza";$("subject-wrap").hidden=sap;$("sapienza-hint").hidden=!sap;
   $("start-btn").querySelector("span").textContent=sap?"ACEITAR O DESAFIO":"COMEÇAR O SIMULADO";
+  updateSapienzaHint();
 }));
+function updateSapienzaHint(){
+  $("sapienza-hint").textContent=state.count===5?
+    "✳ Cinco questões: o Genio sorteia 5 entre as 6 disciplinas. Para incluir todas, escolha 10, 15 ou 20 questões.":
+    "✳ Seis disciplinas, com distribuição equilibrada e sem pistas sobre a próxima matéria.";
+}
 document.querySelectorAll("[data-count]").forEach(button=>button.addEventListener("click",()=>{
   state.count=Number(button.dataset.count);
   document.querySelectorAll("[data-count]").forEach(b=>b.classList.toggle("selected",b===button));
+  updateSapienzaHint();
 }));
 document.querySelectorAll("[data-time]").forEach(button=>button.addEventListener("click",()=>{
   state.time=button.dataset.time;
@@ -77,7 +84,7 @@ async function start(){
     state.demoQuestions=qs;
     session={sessionId:null,engine:"demo",questions:qs.map(q=>({id:q.id,subjectId:q.subjectId,
       subject:SUBJECTS.find(s=>s.id===q.subjectId)?.name||"",topic:q.topic,prompt:q.prompt,options:q.options})),
-      notice:(e.message==="SEMESTER_INCOMPLETE"?"A prova recebida não cobria todas as disciplinas. Ativamos uma rodada demonstrativa equilibrada, sem IA. ":"Modo demonstração local: questões sem IA. ")+(qs.length<state.count?"Disponíveis: "+qs.length+".":"")};
+      notice:(e.message==="SEMESTER_INCOMPLETE"?"A prova recebida não respeitou a distribuição de disciplinas. Ativamos uma rodada demonstrativa equilibrada, sem IA. ":"Modo demonstração local: questões sem IA. ")+(qs.length<state.count?"Disponíveis: "+qs.length+".":"")};
   }
   state.sessionId=session.sessionId;state.questions=session.questions;
   state.answers=state.questions.map(()=>null);state.current=0;state.finishing=false;
