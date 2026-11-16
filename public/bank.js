@@ -1,14 +1,17 @@
-// Questões autorais de demonstração inspiradas nos tópicos dos cinco materiais fornecidos.
+import {NETWORK_QUESTIONS} from "./networks.js";
+// Questões autorais de demonstração inspiradas nos tópicos dos seis materiais fornecidos.
 // Os PDFs originais não são redistribuídos.
 export const SUBJECTS = [
   { id: "agil", name: "Projeto Ágil", icon: "⚡", topics: ["Manifesto Ágil", "Valores e princípios", "Extreme Programming (XP)", "Práticas de XP", "Scrum", "Empirismo e eventos Scrum"] },
   { id: "riscos", name: "Análise de Riscos e Qualidade", icon: "🛡️", topics: ["Identificação de riscos", "Probabilidade e impacto", "Respostas aos riscos", "Contingência", "Ferramentas da qualidade", "Qualidade em projetos"] },
   { id: "planejamento", name: "Planejamento de um Website", icon: "🧭", topics: ["Briefing", "Público-alvo e concorrência", "Objetivos SMART", "Requisitos funcionais", "Requisitos não funcionais", "Elicitação de requisitos"] },
   { id: "criacao", name: "Criação de um Website", icon: "🎨", topics: ["Layout e hierarquia visual", "Princípios de design", "Cores e paleta", "Tipografia digital", "Imagens e vídeos", "SEO"] },
-  { id: "interfaces", name: "Evolução das Interfaces", icon: "🖥️", topics: ["IHC e interfaces", "Usabilidade e acessibilidade", "Web 1.0 e 2.0", "Web 3.0 e 4.0", "Web semântica", "Evolução do design responsivo"] }
+  { id: "interfaces", name: "Evolução das Interfaces", icon: "🖥️", topics: ["IHC e interfaces", "Usabilidade e acessibilidade", "Web 1.0 e 2.0", "Web 3.0 e 4.0", "Web semântica", "Evolução do design responsivo"] },
+  { id: "redes", name: "Redes de Computadores", icon: "🌐", topics: ["Sistemas finais, acesso e núcleo", "Meios de transmissão e ISPs", "Atraso, jitter e perda de pacotes", "Vazão e desempenho", "Modelo OSI e TCP/IP", "Encapsulamento, TCP e UDP", "História da internet"] }
 ];
 // [enunciado, certa, errada1, errada2, errada3, explicação, tópico]
 export const BANK = {
+  redes: NETWORK_QUESTIONS,
   agil: [
     ["Qual ação representa melhor a resposta ágil a mudanças?", "Adaptar o plano com base em feedback", "Proibir alterações após o início", "Priorizar documentos em vez de entregas", "Evitar validação com usuários", "O Manifesto Ágil valoriza responder às mudanças, sem dispensar o planejamento.", "Manifesto Ágil"],
     ["O que significa propriedade coletiva do código em XP?", "A equipe compartilha responsabilidade pelo código", "O autor de cada módulo tem acesso exclusivo", "Somente o gerente modifica o código", "Código não precisa de revisão", "A propriedade coletiva reduz dependências individuais e facilita melhorias.", "Extreme Programming"],
@@ -56,8 +59,23 @@ export function shuffle(items){
   for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]];}
   return out;
 }
+// Quotas inteiras e balanceadas: com cinco questões e seis matérias, uma ficará
+// de fora daquela rodada, variando por sorteio. Nunca fixa uma exclusão.
+export function createSemesterAllocation(count){
+  if(!Number.isInteger(count)||count<1)throw new Error("Quantidade inválida");
+  const ids=shuffle(SUBJECTS.map(s=>s.id));
+  const each=Math.floor(count/ids.length),extra=count%ids.length;
+  return Object.fromEntries(ids.map((id,i)=>[id,each+(i<extra?1:0)]));
+}
 export function hasSemesterCoverage(questions,count){
-  return questions.length===count&&SUBJECTS.every(s=>questions.filter(q=>q.subjectId===s.id).length===count/SUBJECTS.length);
+  if(!Array.isArray(questions)||!Number.isInteger(count)||questions.length!==count)return false;
+  const low=Math.floor(count/SUBJECTS.length),high=Math.ceil(count/SUBJECTS.length);
+  const counts=Object.fromEntries(SUBJECTS.map(s=>[s.id,0]));
+  for(const question of questions){
+    if(!Object.hasOwn(counts,question.subjectId))return false;
+    counts[question.subjectId]++;
+  }
+  return Object.values(counts).every(n=>n>=low&&n<=high);
 }
 export function interleaveSemester(questions){
   const pools=shuffle(SUBJECTS).map(s=>shuffle(questions.filter(q=>q.subjectId===s.id)));
