@@ -3,7 +3,7 @@ import assert from "node:assert/strict";
 import {CURRICULUM,buildStudyContext,getCoverageSummary} from "../curriculum.mjs";
 import {SUBJECTS,createSemesterAllocation} from "../public/bank.js";
 
-test("as seis matérias possuem sínteses por capítulo e identificação da fonte",()=>{
+test("as matérias possuem sínteses por capítulo e identificação da fonte",()=>{
   assert.deepEqual(new Set(Object.keys(CURRICULUM)),new Set(SUBJECTS.map(s=>s.id)));
   for(const s of SUBJECTS){
     const entry=CURRICULUM[s.id];
@@ -38,7 +38,7 @@ test("Redes inclui os quatro capítulos: acesso, desempenho, camadas e história
   assert.doesNotMatch(context,/DISCIPLINA interfaces/);
 });
 
-test("Sapienza usa quotas inteiras para seis matérias em cada tamanho",()=>{
+test("Sapienza usa quotas inteiras para cada matéria e tamanho",()=>{
   for(const count of [5,10,15,20]){
     const allocation=createSemesterAllocation(count);
     const context=buildStudyContext("sapienza",null,count,allocation);
@@ -51,10 +51,25 @@ test("Sapienza usa quotas inteiras para seis matérias em cada tamanho",()=>{
   }
 });
 
+test("os três desafios em C têm módulos próprios e ficam isolados no Impara",()=>{
+  const trunfo=buildStudyContext("impara","trunfo",5);
+  assert.match(trunfo,/operador ternário/i);
+  assert.match(trunfo,/switch/i);
+  assert.doesNotMatch(trunfo,/DISCIPLINA xadrez/);
+  const xadrez=buildStudyContext("impara","xadrez",5);
+  assert.match(xadrez,/do-while/i);
+  assert.match(xadrez,/recursiv/i);
+  assert.doesNotMatch(xadrez,/DISCIPLINA batalha/);
+  const batalha=buildStudyContext("impara","batalha",5);
+  assert.match(batalha,/10x10/);
+  assert.match(batalha,/cone/i);
+  assert.doesNotMatch(batalha,/DISCIPLINA trunfo/);
+});
+
 test("rejeita plano inválido e não publica conteúdo didático no resumo de metadados",()=>{
   assert.throws(()=>buildStudyContext("impara","invalid",5));
   assert.throws(()=>buildStudyContext("sapienza",null,10,{redes:10}));
   const summary=getCoverageSummary();
-  assert.equal(summary.length,6);
+  assert.equal(summary.length,SUBJECTS.length);
   assert.ok(summary.every(s=>!Object.hasOwn(s,"guidance")&&!Object.hasOwn(s,"text")));
 });

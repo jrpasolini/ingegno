@@ -28,7 +28,7 @@ Para habilitar geração dinâmica, configure **NVIDIA_API_KEY** nos secrets do 
 
 ## Conteúdo acadêmico e geração por IA
 
-O arquivo `curriculum.mjs` contém **sínteses originais e curtas**, organizadas por capítulo e página, dos seis materiais acadêmicos fornecidos. O PDF original **não é publicado**. O backend utiliza essas notas no prompt da NVIDIA Build para que o Nemotron produza questões alinhadas à ementa.
+O arquivo `curriculum.mjs` contém **sínteses originais e curtas**, organizadas por capítulo e página, dos nove materiais acadêmicos fornecidos. O PDF original **não é publicado**. O backend utiliza essas notas no prompt da NVIDIA Build para que o Nemotron produza questões alinhadas à ementa.
 
 | Disciplina | Material | Capítulos |
 | --- | --- | --- |
@@ -38,10 +38,13 @@ O arquivo `curriculum.mjs` contém **sínteses originais e curtas**, organizadas
 | Criação de um Website | Criação de um Website (00610) | Layout, cores e tipografia, mídias e SEO |
 | Evolução das Interfaces | A evolução e importância da interface de um Website (00487) | IHC/usabilidade, Web 1.0/2.0, Web 3.0/4.0, evolução do design |
 | Redes de Computadores | Redes de computadores e a internet (Estácio 2025.1) | Redes de acesso e ISPs, atrasos e vazão, OSI/TCP-IP e história da internet |
+| Super Trunfo em C | Super Trunfo em C: desenvolvendo a lógica do jogo (47262) | Decisão simples e composta, operadores lógicos e switch, ternário e dois atributos |
+| Xadrez em C | Movimentação de peças de xadrez (47263) | for/while/do-while, laços aninhados e cavalo, recursividade |
+| Batalha Naval em C | Jogo de Batalha Naval (47264) | Vetores e tabuleiro 10x10, navios diagonais, habilidades em matriz |
 
-Os nove uploads recentes de `00487` têm exatamente o **mesmo conteúdo** (mesmo hash SHA-256), por isso representam um único material — não nove disciplinas. O índice contém seis fontes diferentes no total, incluindo o material de Redes de Computadores adicionado posteriormente.
+Os nove uploads recentes de `00487` têm exatamente o **mesmo conteúdo** (mesmo hash SHA-256), por isso representam um único material — não nove disciplinas. O índice contém nove fontes diferentes no total: as cinco de web e gestão, Redes de Computadores e os três desafios em C (47262, 47263 e 47264).
 
-- **Impara** fornece ao modelo as notas de uma disciplina; **Sapienza** utiliza as seis disciplinas e distribui as perguntas com diferenças de no máximo uma questão por matéria. Com apenas cinco questões, seleciona aleatoriamente cinco das seis; com 10, 15 ou 20 questões, contempla todas as seis.
+- **Impara** fornece ao modelo as notas de uma disciplina; **Sapienza** utiliza as nove disciplinas e distribui as perguntas com diferenças de no máximo uma questão por matéria. Com apenas cinco questões, seleciona aleatoriamente cinco das nove; com 10, 15 ou 20 questões, contempla todas as nove.
 - O banco `public/bank.js` continua sendo uma **demonstração offline** de questões autorais e poderá conter menos questões do que o tamanho solicitado em Impara. Para geração dinâmica com base nos capítulos, é necessário `NVIDIA_API_KEY`.
 - A verificação da saída da IA checa formato, unicidade das alternativas e cobertura de disciplinas, mas não substitui **revisão humana de precisão pedagógica**. Uma referência resumida não equivale ao documento integral.
 

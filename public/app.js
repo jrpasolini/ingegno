@@ -27,9 +27,10 @@ document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener
   updateSapienzaHint();
 }));
 function updateSapienzaHint(){
-  $("sapienza-hint").textContent=state.count===5?
-    "✳ Cinco questões: o Genio sorteia 5 entre as 6 disciplinas. Para incluir todas, escolha 10, 15 ou 20 questões.":
-    "✳ Seis disciplinas, com distribuição equilibrada e sem pistas sobre a próxima matéria.";
+  const total=SUBJECTS.length;
+  $("sapienza-hint").textContent=state.count<total?
+    "✳ "+state.count+" questões: o Genio sorteia "+state.count+" entre as "+total+" disciplinas. Para incluir todas, escolha 10, 15 ou 20 questões.":
+    "✳ "+total+" disciplinas, com distribuição equilibrada e sem pistas sobre a próxima matéria.";
 }
 document.querySelectorAll("[data-count]").forEach(button=>button.addEventListener("click",()=>{
   state.count=Number(button.dataset.count);

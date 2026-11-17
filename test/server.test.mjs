@@ -59,12 +59,15 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const pwa=await fetch(origin+'/ingegno/pwa.js');assert.equal(pwa.status,200);
     const semester=await fetch(origin+'/ingegno/api/session',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'sapienza',subjectId:'agil',count:20})});
     const semesterData=await semester.json();assert.equal(semesterData.questions.length,20);
-    const sixCounts=['agil','riscos','planejamento','criacao','interfaces','redes'].map(id=>semesterData.questions.filter(q=>q.subjectId===id).length);
-    assert.ok(sixCounts.every(n=>n>=3&&n<=4));
+    const ids=['agil','riscos','planejamento','criacao','interfaces','redes','trunfo','xadrez','batalha'];
+    const counts=ids.map(id=>semesterData.questions.filter(q=>q.subjectId===id).length);
+    assert.ok(counts.every(n=>n>=2&&n<=3));
+    assert.equal(counts.reduce((a,b)=>a+b,0),20);
     const listResponse=await fetch(origin+'/ingegno/api/subjects');
     const list=await listResponse.json();
-    assert.equal(list.subjects.length,6);
+    assert.equal(list.subjects.length,9);
     assert.ok(list.subjects.some(s=>s.id==='redes'&&s.name==='Redes de Computadores'));
+    assert.ok(list.subjects.some(s=>s.id==='batalha'&&s.name==='Batalha Naval em C'));
     const networkSession=await fetch(origin+'/ingegno/api/session',{method:'POST',
       headers:{'content-type':'application/json'},body:JSON.stringify({mode:'impara',subjectId:'redes',count:20})});
     assert.equal(networkSession.status,200);
@@ -74,5 +77,14 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const networkModule=await fetch(origin+'/ingegno/networks.js');
     assert.equal(networkModule.status,200);
     assert.match(networkModule.headers.get('content-type'),/text\/javascript/);
+    const programmingModule=await fetch(origin+'/ingegno/programming.js');
+    assert.equal(programmingModule.status,200);
+    assert.match(programmingModule.headers.get('content-type'),/text\/javascript/);
+    const trunfoSession=await fetch(origin+'/ingegno/api/session',{method:'POST',
+      headers:{'content-type':'application/json'},body:JSON.stringify({mode:'impara',subjectId:'trunfo',count:5})});
+    assert.equal(trunfoSession.status,200);
+    const trunfoData=await trunfoSession.json();
+    assert.equal(trunfoData.questions.length,5);
+    assert.ok(trunfoData.questions.every(q=>q.subjectId==='trunfo'));
   }finally{child.kill();}
 });

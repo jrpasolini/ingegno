@@ -20,7 +20,10 @@ test("o layout de caderno mantém as três telas e controles da API",()=>{
   for(const count of [5,10,15,20])assert.ok(html.includes('data-count="'+count+'"'));
   for(const time of ["none","total","question"])assert.ok(html.includes('data-time="'+time+'"'));
   assert.match(html,/<option value="redes">Redes de Computadores<\/option>/);
-  assert.match(html,/SEIS DISCIPLINAS/);
+  assert.match(html,/NOVE DISCIPLINAS/);
+  assert.match(html,/<option value="trunfo">Super Trunfo em C<\/option>/);
+  assert.match(html,/<option value="xadrez">Xadrez em C<\/option>/);
+  assert.match(html,/<option value="batalha">Batalha Naval em C<\/option>/);
 });
 
 test("referências retrô são decorativas e CSS é responsivo",()=>{

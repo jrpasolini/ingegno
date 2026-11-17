@@ -33,7 +33,7 @@ async function generate(mode,subjectId,count){
     "Use APENAS as notas curriculares abaixo como base factual. Elas são sínteses dos módulos didáticos, não o texto integral dos PDFs. "+
     "Não copie enunciados de provas, não invente datas ou fatos que não estejam nas notas, nem afirme ter lido os PDFs. "+
     "Cubra os diferentes módulos da disciplina de forma equilibrada, com questões de compreensão e aplicação. "+
-    (mode==="sapienza"?"Distribua EXATAMENTE as questões entre as disciplinas assim: "+quotaText+". Não gere questões de disciplinas que não constam desta distribuição; não repita enunciados. Com cinco questões uma das seis matérias ficará fora por sorteio. ":"Use somente a disciplina selecionada. ")+
+    (mode==="sapienza"?"Distribua EXATAMENTE as questões entre as disciplinas assim: "+quotaText+". Não gere questões de disciplinas que não constam desta distribuição; não repita enunciados. ":"Use somente a disciplina selecionada. ")+
     "As opções incorretas devem ser plausíveis, porém inequívocas. Para cada questão, o campo topic deve corresponder a um dos módulos descritos e explanation deve justificar a correta com base nas notas, sem citar páginas não verificadas. "+
     "Alterne a posição das respostas corretas. Evite alegações não sustentadas e classificações debatidas tratadas como fatos universais. "+
     "Responda somente ARRAY JSON com objetos {subjectId,topic,prompt,options:[quatro strings],correctIndex:inteiro 0..3,explanation:string}. "+
@@ -114,6 +114,7 @@ async function handler(req,res){
     "/ingegno/app.js":["app.js","text/javascript"],"/ingegno/styles.css":["styles.css","text/css"],
     "/ingegno/bank.js":["bank.js","text/javascript"],
     "/ingegno/networks.js":["networks.js","text/javascript"],
+    "/ingegno/programming.js":["programming.js","text/javascript"],
     "/ingegno/performance.js":["performance.js","text/javascript"],
     "/ingegno/pwa.js":["pwa.js","text/javascript"],
     "/ingegno/sw.js":["sw.js","text/javascript"],

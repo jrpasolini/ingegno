@@ -1,4 +1,5 @@
 import {NETWORK_CURRICULUM} from "./network-curriculum.mjs";
+import {BATALHA_CURRICULUM,TRUNFO_CURRICULUM,XADREZ_CURRICULUM} from "./programming-curriculum.mjs";
 /**
  * Guia curricular sintético e autoral para os simulados do Ingegno.
  *
@@ -91,6 +92,9 @@ export const CURRICULUM = Object.freeze({
     ]
   },
   redes: NETWORK_CURRICULUM,
+  trunfo: TRUNFO_CURRICULUM,
+  xadrez: XADREZ_CURRICULUM,
+  batalha: BATALHA_CURRICULUM,
   interfaces: {
     title: "Evolução das Interfaces",
     source: "A evolução e importância da interface de um Website (00487)",

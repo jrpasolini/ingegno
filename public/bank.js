@@ -1,5 +1,6 @@
 import {NETWORK_QUESTIONS} from "./networks.js";
-// Questões autorais de demonstração inspiradas nos tópicos dos seis materiais fornecidos.
+import {BATALHA_QUESTIONS,TRUNFO_QUESTIONS,XADREZ_QUESTIONS} from "./programming.js";
+// Questões autorais de demonstração inspiradas nos tópicos dos materiais fornecidos.
 // Os PDFs originais não são redistribuídos.
 export const SUBJECTS = [
   { id: "agil", name: "Projeto Ágil", icon: "⚡", topics: ["Manifesto Ágil", "Valores e princípios", "Extreme Programming (XP)", "Práticas de XP", "Scrum", "Empirismo e eventos Scrum"] },
@@ -7,11 +8,17 @@ export const SUBJECTS = [
   { id: "planejamento", name: "Planejamento de um Website", icon: "🧭", topics: ["Briefing", "Público-alvo e concorrência", "Objetivos SMART", "Requisitos funcionais", "Requisitos não funcionais", "Elicitação de requisitos"] },
   { id: "criacao", name: "Criação de um Website", icon: "🎨", topics: ["Layout e hierarquia visual", "Princípios de design", "Cores e paleta", "Tipografia digital", "Imagens e vídeos", "SEO"] },
   { id: "interfaces", name: "Evolução das Interfaces", icon: "🖥️", topics: ["IHC e interfaces", "Usabilidade e acessibilidade", "Web 1.0 e 2.0", "Web 3.0 e 4.0", "Web semântica", "Evolução do design responsivo"] },
-  { id: "redes", name: "Redes de Computadores", icon: "🌐", topics: ["Sistemas finais, acesso e núcleo", "Meios de transmissão e ISPs", "Atraso, jitter e perda de pacotes", "Vazão e desempenho", "Modelo OSI e TCP/IP", "Encapsulamento, TCP e UDP", "História da internet"] }
+  { id: "redes", name: "Redes de Computadores", icon: "🌐", topics: ["Sistemas finais, acesso e núcleo", "Meios de transmissão e ISPs", "Atraso, jitter e perda de pacotes", "Vazão e desempenho", "Modelo OSI e TCP/IP", "Encapsulamento, TCP e UDP", "História da internet"] },
+  { id: "trunfo", name: "Super Trunfo em C", icon: "🃏", topics: ["Estruturas de decisão", "Operadores relacionais", "Operadores lógicos", "Decisões aninhadas e encadeadas", "Switch e menus", "Operador ternário"] },
+  { id: "xadrez", name: "Xadrez em C", icon: "♟️", topics: ["Estruturas de repetição", "for, while e do-while", "Loops aninhados", "Movimento do cavalo", "Recursividade", "Laços com várias condições"] },
+  { id: "batalha", name: "Batalha Naval em C", icon: "🚢", topics: ["Vetores", "Matrizes", "Índices e limites", "Loops aninhados", "Tabuleiro", "Habilidades em matriz"] }
 ];
 // [enunciado, certa, errada1, errada2, errada3, explicação, tópico]
 export const BANK = {
   redes: NETWORK_QUESTIONS,
+  trunfo: TRUNFO_QUESTIONS,
+  xadrez: XADREZ_QUESTIONS,
+  batalha: BATALHA_QUESTIONS,
   agil: [
     ["Qual ação representa melhor a resposta ágil a mudanças?", "Adaptar o plano com base em feedback", "Proibir alterações após o início", "Priorizar documentos em vez de entregas", "Evitar validação com usuários", "O Manifesto Ágil valoriza responder às mudanças, sem dispensar o planejamento.", "Manifesto Ágil"],
     ["O que significa propriedade coletiva do código em XP?", "A equipe compartilha responsabilidade pelo código", "O autor de cada módulo tem acesso exclusivo", "Somente o gerente modifica o código", "Código não precisa de revisão", "A propriedade coletiva reduz dependências individuais e facilita melhorias.", "Extreme Programming"],
@@ -59,8 +66,8 @@ export function shuffle(items){
   for(let i=out.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[out[i],out[j]]=[out[j],out[i]];}
   return out;
 }
-// Quotas inteiras e balanceadas: com cinco questões e seis matérias, uma ficará
-// de fora daquela rodada, variando por sorteio. Nunca fixa uma exclusão.
+// Quotas inteiras e balanceadas. Com menos questões do que matérias, algumas
+// ficam de fora daquela rodada, variando por sorteio. Nunca fixa uma exclusão.
 export function createSemesterAllocation(count){
   if(!Number.isInteger(count)||count<1)throw new Error("Quantidade inválida");
   const ids=shuffle(SUBJECTS.map(s=>s.id));
