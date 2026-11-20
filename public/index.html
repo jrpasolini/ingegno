@@ -81,19 +81,16 @@
       <div class="config-panel">
         <div class="config-title"><span><span class="blue-scribble">✎</span> Prepare seu desafio</span><span class="config-spark" aria-hidden="true">02 / CONFIGURAÇÃO</span></div>
         <div class="config-fields">
-          <div id="subject-wrap" class="field">
-            <label for="subject">DISCIPLINA</label>
-            <select id="subject" aria-label="Disciplina">
-              <option value="agil">Projeto Ágil</option>
-              <option value="riscos">Análise de Riscos e Qualidade</option>
-              <option value="planejamento">Planejamento de um Website</option>
-              <option value="criacao">Criação de um Website</option>
-              <option value="interfaces">Evolução das Interfaces</option>
-              <option value="redes">Redes de Computadores</option>
-              <option value="trunfo">Super Trunfo em C</option>
-              <option value="xadrez">Xadrez em C</option>
-              <option value="batalha">Batalha Naval em C</option>
-            </select>
+          <div id="subject-column" class="field subject-column">
+            <div class="stacked-field">
+              <label for="period">PERÍODO</label>
+              <select id="period" aria-label="Período"></select>
+            </div>
+            <div id="subject-wrap" class="stacked-field">
+              <label for="subject">DISCIPLINAS</label>
+              <select id="subject" aria-label="Disciplinas"></select>
+              <p id="subject-empty" class="subject-empty" hidden>Nenhuma disciplina cadastrada ainda</p>
+            </div>
           </div>
           <p class="sapienza-hint" id="sapienza-hint" hidden>✳ Nove disciplinas: no desafio de 5 questões, cinco matérias são sorteadas.</p>
           <div class="field"><span class="field-label">NÚMERO DE QUESTÕES</span><div class="pill-group" id="count-group" role="group" aria-label="Quantidade de questões">
@@ -107,7 +104,7 @@
         <button type="button" id="start-btn" class="primary-btn"><span>COMEÇAR O SIMULADO</span><span class="btn-arrow" aria-hidden="true">➜</span></button>
         <p id="start-notice" class="notice" aria-live="polite"></p>
       </div>
-      <div class="feature-row"><span>✓ QUATRO ALTERNATIVAS</span><span>✎ CORREÇÃO EXPLICADA</span><span>✧ NOVE DISCIPLINAS</span></div>
+      <div class="feature-row"><span>✓ QUATRO ALTERNATIVAS</span><span>✎ CORREÇÃO EXPLICADA</span><span id="subject-count">✧ ONZE DISCIPLINAS</span></div>
       <div id="install-strip" class="install-strip" hidden><img src="./assets/icon-192.png" width="48" height="48" alt=""><div><strong>O Genio na sua tela inicial</strong><p id="install-description">Abra seus desafios com um toque.</p></div><button type="button" id="install-app" class="paper-button">Instalar aplicativo</button></div>
     </section>
     <section id="quiz" class="quiz page" aria-label="Simulado">

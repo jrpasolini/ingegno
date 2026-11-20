@@ -151,11 +151,16 @@ main{position:relative;z-index:1;max-width:1010px;padding:14px 27px 58px}
 .welcome .config-title{display:flex;justify-content:space-between;align-items:center;margin:0 0 19px;color:var(--paper-ink);font:700 19px/1.2 Georgia,serif;letter-spacing:0;text-transform:none}
 .welcome .config-spark{font:700 10px "Courier New",monospace;color:var(--bic)}
 .blue-scribble{color:var(--bic);margin-right:6px;font-size:26px}
-.welcome .config-fields{display:grid;grid-template-columns:1.3fr 1fr 1.24fr;gap:19px;align-items:start}
+.welcome .config-fields{display:grid;grid-template-columns:1.3fr 1fr 1.24fr;gap:19px;align-items:stretch}
 .welcome .field{min-width:0;margin-bottom:6px}
-.welcome .field:not(:first-child){border-left:1px solid rgba(25,58,117,.27);padding-left:17px}
+.welcome .config-fields>.field{display:flex;flex-direction:column}
+.welcome .config-fields>.field:not(:first-child){border-left:1px solid rgba(25,58,117,.27);padding-left:17px}
+.welcome .subject-column{gap:16px}
+.welcome .stacked-field{min-width:0}
 .welcome .field label,.welcome .field-label{font:700 10px/1.2 "Courier New",monospace;color:#344873;letter-spacing:.08em;margin:0 0 9px}
 .welcome select{background:#fffdf5;color:var(--paper-ink);border:1px solid rgba(30,57,97,.67);border-radius:7px;padding:12px 10px;font:13px/1.4 Georgia,serif;min-height:44px}
+.welcome select:disabled{opacity:1;color:#626b75;background:#f6f1e6;cursor:not-allowed}
+.welcome .subject-empty{margin:0;min-height:44px;display:flex;align-items:center;padding:10px 12px;border:1px dashed rgba(30,57,97,.55);border-radius:7px;background:#fffdf5;color:#626b75;font:italic 13px/1.35 Georgia,serif}
 .welcome .pill-group{gap:5px;flex-wrap:wrap}
 .welcome .pill{color:#243f74;background:#fffdf6;border:1px solid rgba(26,51,91,.62);min-width:39px;min-height:43px;padding:10px 9px;border-radius:7px;font:bold 13px/1.15 "DM Sans",Arial,sans-serif}
 .welcome .pill.selected,.welcome .pill:hover{color:#fffdf4;background:var(--bic);border-color:var(--bic)}
@@ -220,7 +225,7 @@ body:not(:has(#welcome.active)) .notebook-decor{opacity:.32}
   .welcome .config-panel{padding:18px 15px}
   .welcome .config-title{font-size:17px}
   .welcome .config-spark{font-size:9px}
-  .welcome .field:not(:first-child){border-left:0;border-top:1px solid rgba(25,58,117,.2);padding:12px 0 0}
+  .welcome .config-fields>.field:not(:first-child){border-left:0;border-top:1px solid rgba(25,58,117,.2);padding:12px 0 0}
   .welcome .pill{min-width:45px}
   .welcome .time-hint{margin:10px 0 17px}
   .welcome .primary-btn{font-size:14px}

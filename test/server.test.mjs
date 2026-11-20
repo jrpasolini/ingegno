@@ -1,6 +1,7 @@
 import test from "node:test";
 import assert from "node:assert/strict";
 import {spawn} from "node:child_process";
+import {readFile} from "node:fs/promises";
 import {setTimeout as sleep} from "node:timers/promises";
 test("backend responde, cria sessão e corrige deterministicamente",async()=>{
   const port=33000+Math.floor(Math.random()*2000);
@@ -59,15 +60,17 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const pwa=await fetch(origin+'/ingegno/pwa.js');assert.equal(pwa.status,200);
     const semester=await fetch(origin+'/ingegno/api/session',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify({mode:'sapienza',subjectId:'agil',count:20})});
     const semesterData=await semester.json();assert.equal(semesterData.questions.length,20);
-    const ids=['agil','riscos','planejamento','criacao','interfaces','redes','trunfo','xadrez','batalha'];
-    const counts=ids.map(id=>semesterData.questions.filter(q=>q.subjectId===id).length);
-    assert.ok(counts.every(n=>n>=2&&n<=3));
-    assert.equal(counts.reduce((a,b)=>a+b,0),20);
     const listResponse=await fetch(origin+'/ingegno/api/subjects');
     const list=await listResponse.json();
-    assert.equal(list.subjects.length,9);
+    const ids=list.subjects.map(s=>s.id);
+    const counts=ids.map(id=>semesterData.questions.filter(q=>q.subjectId===id).length);
+    const low=Math.floor(20/ids.length),high=Math.ceil(20/ids.length);
+    assert.ok(counts.every(n=>n>=low&&n<=high));
+    assert.equal(counts.reduce((a,b)=>a+b,0),20);
     assert.ok(list.subjects.some(s=>s.id==='redes'&&s.name==='Redes de Computadores'));
     assert.ok(list.subjects.some(s=>s.id==='batalha'&&s.name==='Batalha Naval em C'));
+    assert.ok(list.subjects.some(s=>s.id==='comportamento'&&s.name==='Comportamento Organizacional'));
+    assert.ok(list.subjects.some(s=>s.id==='poo'&&s.name==='Programação Orientada a Objetos'));
     const networkSession=await fetch(origin+'/ingegno/api/session',{method:'POST',
       headers:{'content-type':'application/json'},body:JSON.stringify({mode:'impara',subjectId:'redes',count:20})});
     assert.equal(networkSession.status,200);
@@ -80,11 +83,28 @@ test("backend responde, cria sessão e corrige deterministicamente",async()=>{
     const programmingModule=await fetch(origin+'/ingegno/programming.js');
     assert.equal(programmingModule.status,200);
     assert.match(programmingModule.headers.get('content-type'),/text\/javascript/);
+    const periodsModule=await fetch(origin+'/ingegno/periods.js');
+    assert.equal(periodsModule.status,200);
+    assert.match(periodsModule.headers.get('content-type'),/text\/javascript/);
+    assert.match(await periodsModule.text(),/1º Período/);
     const trunfoSession=await fetch(origin+'/ingegno/api/session',{method:'POST',
       headers:{'content-type':'application/json'},body:JSON.stringify({mode:'impara',subjectId:'trunfo',count:5})});
     assert.equal(trunfoSession.status,200);
     const trunfoData=await trunfoSession.json();
     assert.equal(trunfoData.questions.length,5);
     assert.ok(trunfoData.questions.every(q=>q.subjectId==='trunfo'));
+    for(const subjectId of ['comportamento','poo']){
+      const created=await fetch(origin+'/ingegno/api/session',{method:'POST',
+        headers:{'content-type':'application/json'},body:JSON.stringify({mode:'impara',subjectId,count:5})});
+      assert.equal(created.status,200,subjectId);
+      const data=await created.json();
+      assert.equal(data.questions.length,5);
+      assert.ok(data.questions.every(q=>q.subjectId===subjectId&&!Object.hasOwn(q,'correctIndex')));
+    }
   }finally{child.kill();}
+});
+
+test("cada simulado continua com um pedido de questões e um de parecer",async()=>{
+  const source=await readFile(new URL("../server.mjs",import.meta.url),"utf8");
+  assert.equal((source.match(/integrate\.api\.nvidia\.com/g)||[]).length,2);
 });

@@ -2,9 +2,8 @@ import test from "node:test";
 import assert from "node:assert/strict";
 import {SUBJECTS,BANK,createDemoQuestions,hasSemesterCoverage,interleaveSemester,createSemesterAllocation} from "../public/bank.js";
 
-test("nove disciplinas e quatro alternativas por questão",()=>{
-  assert.equal(SUBJECTS.length,9);
-  assert.equal(new Set(SUBJECTS.map(s=>s.id)).size,9);
+test("cada disciplina tem ao menos cinco questões de quatro alternativas",()=>{
+  assert.equal(new Set(SUBJECTS.map(s=>s.id)).size,SUBJECTS.length);
   for(const s of SUBJECTS){
     assert.ok(BANK[s.id].length>=5);
     const qs=createDemoQuestions("impara",s.id,5);
@@ -36,7 +35,7 @@ test("Sapienza com cinco questões seleciona cinco das nove matérias",()=>{
   }
 });
 
-test("Sapienza com dez, quinze ou vinte questões cobre todas as matérias",()=>{
+test("Sapienza distribui 10, 15 e 20 questões dentro da cota de cada matéria",()=>{
   const total=SUBJECTS.length;
   for(const count of [10,15,20]){
     const qs=createDemoQuestions("sapienza",null,count);
