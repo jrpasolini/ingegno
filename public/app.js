@@ -1,4 +1,5 @@
 import {SUBJECTS,createDemoQuestions,hasSemesterCoverage} from "./bank.js";
+import {PERIODS,subjectsFor,defaultPeriod} from "./periods.js";
 import {analyzePerformance,teacherVerdict,examOutcome} from "./performance.js";
 const $=id=>document.getElementById(id);
 const state={mode:"impara",count:10,time:"none",questions:[],answers:[],current:0,sessionId:null,demoQuestions:[],
@@ -22,14 +23,21 @@ function markStudyText(value,terms){
 document.querySelectorAll("[data-mode]").forEach(button=>button.addEventListener("click",()=>{
   state.mode=button.dataset.mode;
   document.querySelectorAll("[data-mode]").forEach(b=>{const active=b===button;b.classList.toggle("selected",active);b.setAttribute("aria-pressed",String(active));});
-  const sap=state.mode==="sapienza";$("subject-wrap").hidden=sap;$("sapienza-hint").hidden=!sap;
+  const sap=state.mode==="sapienza";$("subject-column").hidden=sap;$("sapienza-hint").hidden=!sap;
   $("start-btn").querySelector("span").textContent=sap?"ACEITAR O DESAFIO":"COMEÇAR O SIMULADO";
   updateSapienzaHint();
+  syncStart();
 }));
+function joinOr(items){
+  if(items.length<2) return items.join("");
+  return items.slice(0,-1).join(", ")+" ou "+items[items.length-1];
+}
 function updateSapienzaHint(){
   const total=SUBJECTS.length;
+  const covering=[5,10,15,20].filter(count=>count>=total).map(String);
+  const coverText=covering.length?" Para incluir todas, escolha "+joinOr(covering)+" questões.":"";
   $("sapienza-hint").textContent=state.count<total?
-    "✳ "+state.count+" questões: o Genio sorteia "+state.count+" entre as "+total+" disciplinas. Para incluir todas, escolha 10, 15 ou 20 questões.":
+    "✳ "+state.count+" questões: o Genio sorteia "+state.count+" entre as "+total+" disciplinas."+coverText:
     "✳ "+total+" disciplinas, com distribuição equilibrada e sem pistas sobre a próxima matéria.";
 }
 document.querySelectorAll("[data-count]").forEach(button=>button.addEventListener("click",()=>{
@@ -58,11 +66,48 @@ function tick(){
     else{state.current++;state.questionDeadline=Date.now()+75000;renderQuestion();}
   }
 }
+function currentPeriod(){
+  return PERIODS.find(period=>period.id===$("period").value)||defaultPeriod(PERIODS,SUBJECTS);
+}
+function periodBlocksStart(){
+  if(state.mode!=="impara")return false;
+  return !subjectsFor(currentPeriod(),SUBJECTS).some(subject=>subject.id===$("subject").value);
+}
+function syncStart(){$("start-btn").disabled=periodBlocksStart();}
+function fillSelect(select,items){
+  const previous=select.value;
+  select.replaceChildren();
+  for(const item of items){
+    const option=document.createElement("option");
+    option.value=item.id;option.textContent=item.label;select.append(option);
+  }
+  if(items.some(item=>item.id===previous))select.value=previous;
+}
+function renderSubjectOptions(){
+  const subjects=subjectsFor(currentPeriod(),SUBJECTS);
+  const select=$("subject"),empty=!subjects.length;
+  fillSelect(select,subjects.map(subject=>({id:subject.id,label:subject.name})));
+  select.disabled=empty;select.hidden=empty;$("subject-empty").hidden=!empty;
+  syncStart();
+}
+function paintSubjectCount(){
+  const totals=["","UMA","DUAS","TRÊS","QUATRO","CINCO","SEIS","SETE","OITO","NOVE","DEZ","ONZE","DOZE","TREZE","CATORZE","QUINZE","DEZESSEIS","DEZESSETE","DEZOITO","DEZENOVE","VINTE"];
+  const count=SUBJECTS.length;
+  const word=totals[count]||String(count);
+  const chip=$("subject-count");
+  if(chip) chip.textContent="✧ "+word+" DISCIPLINA"+(count===1?"":"S");
+}
+function renderPeriodOptions(){
+  fillSelect($("period"),PERIODS.map(period=>({id:period.id,label:period.label})));
+  $("period").value=defaultPeriod(PERIODS,SUBJECTS).id;
+  renderSubjectOptions();
+  paintSubjectCount();
+}
 async function start(){
-  if(state.finishing)return;
+  if(state.finishing||periodBlocksStart()){syncStart();return;}
   const btn=$("start-btn");btn.disabled=true;
-  const configuration=[...document.querySelectorAll('.mode-card,[data-count],[data-time],#subject')];
-  const unlock=()=>{btn.disabled=false;configuration.forEach(control=>{control.disabled=false;});};
+  const configuration=[...document.querySelectorAll('.mode-card,[data-count],[data-time],#subject,#period')];
+  const unlock=()=>{configuration.forEach(control=>{control.disabled=false;});renderSubjectOptions();};
   configuration.forEach(control=>{control.disabled=true;});
   setNotice("start-notice","Genio está preparando seu desafio…");
   const subjectId=$("subject").value;
@@ -167,6 +212,8 @@ async function finish(){
   }).join("");
   visible("result");state.finishing=false;
 }
+renderPeriodOptions();
+$("period").addEventListener("change",renderSubjectOptions);
 $("start-btn").addEventListener("click",start);
 $("next-btn").addEventListener("click",()=>{
   if(state.answers[state.current]===null)return;

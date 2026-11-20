@@ -1,5 +1,7 @@
 import {NETWORK_CURRICULUM} from "./network-curriculum.mjs";
 import {BATALHA_CURRICULUM,TRUNFO_CURRICULUM,XADREZ_CURRICULUM} from "./programming-curriculum.mjs";
+import {COMPORTAMENTO_CURRICULUM} from "./comportamento-curriculum.mjs";
+import {POO_CURRICULUM} from "./poo-curriculum.mjs";
 /**
  * Guia curricular sintético e autoral para os simulados do Ingegno.
  *
@@ -95,6 +97,8 @@ export const CURRICULUM = Object.freeze({
   trunfo: TRUNFO_CURRICULUM,
   xadrez: XADREZ_CURRICULUM,
   batalha: BATALHA_CURRICULUM,
+  comportamento: COMPORTAMENTO_CURRICULUM,
+  poo: POO_CURRICULUM,
   interfaces: {
     title: "Evolução das Interfaces",
     source: "A evolução e importância da interface de um Website (00487)",
@@ -129,9 +133,10 @@ export function buildStudyContext(mode,subjectId,count,allocation=null){
      ids.reduce((sum,id)=>sum+quotas[id],0)!==count)throw new Error("Distribuição curricular inválida");
   return ids.filter(id=>quotas[id]>0).map(id=>{
     const item=CURRICULUM[id];
-    const modules=item.modules.map((module,index)=>
-      String(index+1)+". "+module.title+" (páginas "+module.pages+"): "+module.guidance
-    ).join("\n");
+    const modules=item.modules.map((module,index)=>{
+      const pages=module.pages?" (páginas "+module.pages+")":"";
+      return String(index+1)+". "+module.title+pages+": "+module.guidance;
+    }).join("\n");
     return "DISCIPLINA "+id+" — "+item.title+"; "+quotas[id]+
       " questão(ões). Material de referência: "+item.source+".\n"+modules;
   }).join("\n\n");

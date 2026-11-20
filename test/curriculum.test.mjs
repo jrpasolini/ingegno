@@ -11,8 +11,8 @@ test("as matérias possuem sínteses por capítulo e identificação da fonte",(
     assert.ok(entry.source.length>18);
     for(const module of entry.modules){
       assert.ok(module.title.length>8);
-      assert.match(module.pages,/^\d+–\d+$/);
-      assert.ok(module.guidance.length>150);
+      if(module.pages) assert.match(module.pages,/^\d+–\d+$/);
+      assert.ok(module.guidance.length>150,module.title);
       assert.ok(!/https?:\/\//.test(module.guidance));
     }
   }
@@ -64,6 +64,27 @@ test("os três desafios em C têm módulos próprios e ficam isolados no Impara"
   assert.match(batalha,/10x10/);
   assert.match(batalha,/cone/i);
   assert.doesNotMatch(batalha,/DISCIPLINA trunfo/);
+});
+
+test("as disciplinas novas entram no mesmo prompt, sem páginas inventadas",()=>{
+  const comportamento=buildStudyContext("impara","comportamento",6);
+  for(const title of ["As pessoas nas organizações","A motivação e o trabalho","Comunicação no ambiente de trabalho","Liderança, poder e autoridade","Ética, inclusão e diversidade","Desenvolvimento de equipes de alta performance"]){
+    assert.match(comportamento,new RegExp(title));
+  }
+  assert.doesNotMatch(comportamento,/páginas /);
+  assert.doesNotMatch(comportamento,/DISCIPLINA poo/);
+  const poo=buildStudyContext("impara","poo",5);
+  for(const title of ["Introdução à programação OO em Java","Herança em Java","Persistência com JPA e ORM","Threads e multiprogramação","Exceções em Java"]){
+    assert.match(poo,new RegExp(title.replace(/[.*+?^${}()|[\]\\]/g,"\\$&")));
+  }
+  assert.match(poo,/Liskov/);
+  assert.match(poo,/equals/);
+  assert.match(poo,/JDBC/);
+  assert.match(poo,/java\.lang/);
+  assert.match(poo,/try-catch/);
+  assert.doesNotMatch(poo,/DISCIPLINA comportamento/);
+  assert.deepEqual(CURRICULUM.comportamento.modules.map(module=>module.title),SUBJECTS.find(subject=>subject.id==="comportamento").topics);
+  assert.deepEqual(CURRICULUM.poo.modules.map(module=>module.title),SUBJECTS.find(subject=>subject.id==="poo").topics);
 });
 
 test("rejeita plano inválido e não publica conteúdo didático no resumo de metadados",()=>{

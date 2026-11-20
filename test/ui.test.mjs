@@ -7,7 +7,7 @@ const styles=await readFile(new URL("../public/styles.css",import.meta.url),"utf
 const js=await readFile(new URL("../public/app.js",import.meta.url),"utf8");
 
 test("o layout de caderno mantém as três telas e controles da API",()=>{
-  const ids=["welcome","quiz","result","subject","subject-wrap","sapienza-hint","count-group",
+  const ids=["welcome","quiz","result","subject","subject-wrap","subject-column","period","subject-empty","subject-count","sapienza-hint","count-group",
     "time-group","start-btn","start-notice","counter","quiz-mode","timer","progress-fill",
     "question-tag","question-text","answers","quit-btn","next-btn","quiz-notice","score",
     "percent","duration","review","review-count","again-btn"];
@@ -19,11 +19,14 @@ test("o layout de caderno mantém as três telas e controles da API",()=>{
   assert.equal((html.match(/data-mode="sapienza"/g)||[]).length,1);
   for(const count of [5,10,15,20])assert.ok(html.includes('data-count="'+count+'"'));
   for(const time of ["none","total","question"])assert.ok(html.includes('data-time="'+time+'"'));
-  assert.match(html,/<option value="redes">Redes de Computadores<\/option>/);
-  assert.match(html,/NOVE DISCIPLINAS/);
-  assert.match(html,/<option value="trunfo">Super Trunfo em C<\/option>/);
-  assert.match(html,/<option value="xadrez">Xadrez em C<\/option>/);
-  assert.match(html,/<option value="batalha">Batalha Naval em C<\/option>/);
+  assert.match(html,/>PERÍODO</);
+  assert.match(html,/>DISCIPLINAS</);
+  assert.match(html,/Nenhuma disciplina cadastrada ainda/);
+  assert.match(html,/id="subject-count"/);
+  assert.match(js,/subject-count/);
+  assert.match(js,/from "\.\/periods\.js"/);
+  assert.match(js,/\$\("subject-column"\)\.hidden=sap/);
+  assert.doesNotMatch(html,/<option value="agil">/);
 });
 
 test("referências retrô são decorativas e CSS é responsivo",()=>{

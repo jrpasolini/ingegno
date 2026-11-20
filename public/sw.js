@@ -1,6 +1,6 @@
-const CACHE='genio-shell-v3';
+const CACHE='genio-shell-v4';
 const ROOT='/ingegno/';
-const SHELL=[ROOT,ROOT+'app.js',ROOT+'styles.css',ROOT+'bank.js',ROOT+'networks.js',ROOT+'programming.js',ROOT+'performance.js',ROOT+'pwa.js',
+const SHELL=[ROOT,ROOT+'app.js',ROOT+'styles.css',ROOT+'bank.js',ROOT+'periods.js',ROOT+'networks.js',ROOT+'programming.js',ROOT+'comportamento.js',ROOT+'poo.js',ROOT+'performance.js',ROOT+'pwa.js',
   ROOT+'manifest.webmanifest',ROOT+'assets/einstein-matricial-original.png',ROOT+'assets/gradiente-msx-polaroid.webp',
   ROOT+'assets/icon-192.png',ROOT+'assets/icon-512.png',ROOT+'assets/icon-maskable-512.png',ROOT+'assets/apple-touch-icon.png'];
 self.addEventListener('install',event=>event.waitUntil(caches.open(CACHE).then(cache=>cache.addAll(SHELL))));

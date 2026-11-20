@@ -1,5 +1,7 @@
 import {NETWORK_QUESTIONS} from "./networks.js";
 import {BATALHA_QUESTIONS,TRUNFO_QUESTIONS,XADREZ_QUESTIONS} from "./programming.js";
+import {COMPORTAMENTO_QUESTIONS} from "./comportamento.js";
+import {POO_QUESTIONS} from "./poo.js";
 // Questões autorais de demonstração inspiradas nos tópicos dos materiais fornecidos.
 // Os PDFs originais não são redistribuídos.
 export const SUBJECTS = [
@@ -11,11 +13,15 @@ export const SUBJECTS = [
   { id: "redes", name: "Redes de Computadores", icon: "🌐", topics: ["Sistemas finais, acesso e núcleo", "Meios de transmissão e ISPs", "Atraso, jitter e perda de pacotes", "Vazão e desempenho", "Modelo OSI e TCP/IP", "Encapsulamento, TCP e UDP", "História da internet"] },
   { id: "trunfo", name: "Super Trunfo em C", icon: "🃏", topics: ["Estruturas de decisão", "Operadores relacionais", "Operadores lógicos", "Decisões aninhadas e encadeadas", "Switch e menus", "Operador ternário"] },
   { id: "xadrez", name: "Xadrez em C", icon: "♟️", topics: ["Estruturas de repetição", "for, while e do-while", "Loops aninhados", "Movimento do cavalo", "Recursividade", "Laços com várias condições"] },
-  { id: "batalha", name: "Batalha Naval em C", icon: "🚢", topics: ["Vetores", "Matrizes", "Índices e limites", "Loops aninhados", "Tabuleiro", "Habilidades em matriz"] }
+  { id: "batalha", name: "Batalha Naval em C", icon: "🚢", topics: ["Vetores", "Matrizes", "Índices e limites", "Loops aninhados", "Tabuleiro", "Habilidades em matriz"] },
+  { id: "comportamento", name: "Comportamento Organizacional", icon: "🤝", topics: ["As pessoas nas organizações", "A motivação e o trabalho", "Comunicação no ambiente de trabalho", "Liderança, poder e autoridade", "Ética, inclusão e diversidade", "Desenvolvimento de equipes de alta performance"] },
+  { id: "poo", name: "Programação Orientada a Objetos", icon: "☕", topics: ["Introdução à programação OO em Java", "Herança em Java", "Persistência com JPA e ORM", "Threads e multiprogramação", "Exceções em Java"] }
 ];
 // [enunciado, certa, errada1, errada2, errada3, explicação, tópico]
 export const BANK = {
   redes: NETWORK_QUESTIONS,
+  comportamento: COMPORTAMENTO_QUESTIONS,
+  poo: POO_QUESTIONS,
   trunfo: TRUNFO_QUESTIONS,
   xadrez: XADREZ_QUESTIONS,
   batalha: BATALHA_QUESTIONS,
